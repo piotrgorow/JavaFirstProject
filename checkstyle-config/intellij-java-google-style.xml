@@ -562,15 +562,15 @@
   </option>
   <option name="IMPORT_LAYOUT_TABLE">
     <value>
-      <package name="" withSubpackages="true" static="true" />
-        <emptyLine />
-        <package name="com.google" withSubpackages="true" static="false" />
-        <emptyLine />
-        <package name="" withSubpackages="true" static="false" />
-        <emptyLine />
-        <package name="java" withSubpackages="true" static="false" />
-        <package name="javax" withSubpackages="true" static="false" />
-        <emptyLine />
+      <package name="" withSubpackages="true" static="true"/>
+      <emptyLine/>
+      <package name="com.google" withSubpackages="true" static="false"/>
+      <emptyLine/>
+      <package name="" withSubpackages="true" static="false"/>
+      <emptyLine/>
+      <package name="java" withSubpackages="true" static="false"/>
+      <package name="javax" withSubpackages="true" static="false"/>
+      <emptyLine/>
     </value>
   </option>
   <option name="RIGHT_MARGIN" value="100"/>
