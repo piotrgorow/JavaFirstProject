@@ -9,10 +9,11 @@ class HelloWorldTest {
   @Test
   void shouldReturnHelloWorld() {
     //given
+    HelloWorld helloWorld = new HelloWorld();
     String expected = "Hello World!";
 
     //when
-    String result = HelloWorld.getHelloWorld();
+    String result = helloWorld.getHelloWorld();
 
     //then
     assertEquals(expected, result);
