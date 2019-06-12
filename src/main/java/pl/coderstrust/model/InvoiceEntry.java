@@ -10,12 +10,11 @@ public class InvoiceEntry {
   private Vat vatRate;
   private BigDecimal vatValue;
 
-  public InvoiceEntry(String description, BigDecimal value,
-      Vat vatRate) {
+  public InvoiceEntry(String description, BigDecimal value, Vat vatRate) {
     this.description = description;
     this.value = value;
     this.vatRate = vatRate;
-    this.vatValue = vatRate.getValue().multiply(value);
+    vatValue = vatRate.getValue().multiply(value);
   }
 
   public String getDescription() {
