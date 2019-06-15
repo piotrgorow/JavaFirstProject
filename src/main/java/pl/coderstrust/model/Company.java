@@ -1,5 +1,7 @@
 package pl.coderstrust.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 public class Company {
@@ -8,7 +10,10 @@ public class Company {
   private String taxIdentificationNumber;
   private String address;
 
-  public Company(String name, String taxIdentificationNumber, String address) {
+  @JsonCreator
+  public Company(@JsonProperty("name") String name,
+      @JsonProperty("taxIdentificationNumber") String taxIdentificationNumber,
+      @JsonProperty("address") String address) {
     this.name = name;
     this.taxIdentificationNumber = taxIdentificationNumber;
     this.address = address;
