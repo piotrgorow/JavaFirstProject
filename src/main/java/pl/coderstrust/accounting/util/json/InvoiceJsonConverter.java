@@ -17,10 +17,16 @@ public class InvoiceJsonConverter {
   }
 
   public static String toJson(Invoice invoice) throws IOException {
+    if (invoice == null) {
+      throw new IllegalArgumentException("Parameter invoice cannot be null.");
+    }
     return objectMapper.writeValueAsString(invoice);
   }
 
   public static Invoice fromJson(String json) throws IOException {
+    if (json == "" || json == null) {
+      throw new IllegalArgumentException("Parameter json cannot be empty or null.");
+    }
     return objectMapper.readValue(json, Invoice.class);
   }
 }

@@ -1,6 +1,7 @@
 package pl.coderstrust.accounting.util.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -87,6 +88,11 @@ class InvoiceJsonConverterTest {
     assertEquals(expected, result);
   }
 
+  @Test
+  void shouldThrowExceptionWhenPassedParameterInvoiceIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.toJson(null));
+  }
+
   @ParameterizedTest
   @MethodSource("jasonParameters")
   void shouldReturnCorrectInvoiceObjectWhenJsonStringIsPassed(String given, Invoice expected) throws IOException {
@@ -151,5 +157,10 @@ class InvoiceJsonConverterTest {
 
     //then
     assertEquals(expected, result);
+  }
+
+  @Test
+  void shouldThrowExceptionWhenPassedParameterJsonIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(null));
   }
 }
