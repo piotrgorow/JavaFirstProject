@@ -160,6 +160,11 @@ class InvoiceJsonConverterTest {
   }
 
   @Test
+  void shouldThrowExceptionWhenPassedParameterJsonIsEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(""));
+  }
+
+  @Test
   void shouldThrowExceptionWhenPassedParameterJsonIsNull() {
     assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(null));
   }
