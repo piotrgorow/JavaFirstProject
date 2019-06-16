@@ -96,10 +96,10 @@ class InvoiceJsonConverterTest {
   @ParameterizedTest
   @MethodSource("jasonParameters")
   void shouldReturnCorrectInvoiceObjectWhenJsonStringIsPassed(String given, Invoice expected) throws IOException {
-    //when
+    // When
     Invoice result = InvoiceJsonConverter.fromJson(given);
 
-    //then
+    // Then
     assertEquals(expected, result);
   }
 
@@ -138,7 +138,7 @@ class InvoiceJsonConverterTest {
 
   @Test
   void shouldReturnProperInvoiceObjectWhenInvoiceElementsWasAdded() throws IOException {
-    //given
+    // Given
     String given = "{\"id\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":\"Seller\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Krótka\"},\"buyer\":{\"name\":\"Buyer\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Długa\"},\"invoiceEntries\":"
@@ -152,10 +152,10 @@ class InvoiceJsonConverterTest {
     expected.addInvoiceEntry("Cukier", BigDecimal.valueOf(3.5), Vat.VAT_23);
     expected.addInvoiceEntry("Sól", BigDecimal.valueOf(5.64), Vat.VAT_23);
 
-    //when
+    // When
     Invoice result = InvoiceJsonConverter.fromJson(given);
 
-    //then
+    // Then
     assertEquals(expected, result);
   }
 
