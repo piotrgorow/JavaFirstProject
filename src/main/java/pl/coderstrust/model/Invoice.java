@@ -12,14 +12,14 @@ public class Invoice {
   private LocalDate date;
   private Company seller;
   private Company buyer;
-  private List<InvoiceEntry> invoiceEntries;
+  private final List<InvoiceEntry> invoiceEntries;
 
   public Invoice(String id, LocalDate date, Company seller, Company buyer) {
     this.id = id;
     this.date = date;
     this.seller = seller;
     this.buyer = buyer;
-    this.invoiceEntries = new ArrayList<>();
+    invoiceEntries = new ArrayList<>();
   }
 
   public String getId() {

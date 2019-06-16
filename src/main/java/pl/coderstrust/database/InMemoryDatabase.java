@@ -14,6 +14,9 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public void saveInvoice(Invoice invoice) {
+    if (invoice == null) {
+      throw new IllegalArgumentException("Invoice cannot be null");
+    }
     invoices.put(invoice.getId(), invoice);
   }
 
@@ -32,8 +35,25 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public boolean updateInvoice(String id, Invoice invoice) {
+    if (invoice == null) {
+      throw new IllegalArgumentException("Invoice cannot be null");
+    }
     if (findInvoide(id)) {
       invoices.replace(id, invoice);
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public void removeAllInvoices() {
+    invoices.clear();
+  }
+
+  @Override
+  public boolean removeInvoiceById(String id) {
+    if (findInvoide(id)) {
+      invoices.remove(id);
       return true;
     }
     return false;
