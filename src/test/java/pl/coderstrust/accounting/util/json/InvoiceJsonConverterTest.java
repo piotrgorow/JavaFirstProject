@@ -23,7 +23,7 @@ class InvoiceJsonConverterTest {
     // When
     String result = InvoiceJsonConverter.toJson(given);
 
-    //then
+    // Then
     assertEquals(expected, result);
   }
 
