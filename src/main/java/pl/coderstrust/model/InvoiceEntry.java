@@ -6,12 +6,14 @@ import java.util.Objects;
 public class InvoiceEntry {
 
   private String description;
+  private int quantity;
   private BigDecimal value;
   private Vat vatRate;
   private BigDecimal vatValue;
 
-  public InvoiceEntry(String description, BigDecimal value, Vat vatRate) {
+  InvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {
     this.description = description;
+    this.quantity = quantity;
     this.value = value;
     this.vatRate = vatRate;
     vatValue = vatRate.getValue().multiply(value);
@@ -47,6 +49,14 @@ public class InvoiceEntry {
 
   public void setVatValue(BigDecimal vatValue) {
     this.vatValue = vatValue;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
   }
 
   @Override

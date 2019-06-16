@@ -58,6 +58,10 @@ public class Invoice {
     return invoiceEntries;
   }
 
+  public void addInvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {
+    invoiceEntries.add(new InvoiceEntry(description, quantity, value, vatRate));
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -70,15 +74,12 @@ public class Invoice {
     return Objects.equals(id, invoice.id)
         && Objects.equals(date, invoice.date)
         && Objects.equals(seller, invoice.seller)
-        && Objects.equals(buyer, invoice.buyer);
+        && Objects.equals(buyer, invoice.buyer)
+        && Objects.equals(invoiceEntries, invoice.invoiceEntries);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, date, seller, buyer);
-  }
-
-  public void addInvoiceEntry(String description, BigDecimal value, Vat vatRate) {
-    invoiceEntries.add(new InvoiceEntry(description,value,vatRate));
+    return Objects.hash(id, date, seller, buyer, invoiceEntries);
   }
 }

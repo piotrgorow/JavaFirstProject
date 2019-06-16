@@ -1,6 +1,6 @@
 package pl.coderstrust.database;
 
-import java.util.List;
+import java.util.Collection;
 import pl.coderstrust.model.Invoice;
 
 public interface Database {
@@ -9,7 +9,7 @@ public interface Database {
 
   Invoice getInvoiceById(String id);
 
-  List<Invoice> getInvoices();
+  Collection<Invoice> getInvoices();
 
-  void updateInvoice(Invoice invoice);
+  boolean updateInvoice(String id,Invoice invoice);
 }

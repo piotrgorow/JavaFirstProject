@@ -1,6 +1,6 @@
 package pl.coderstrust.model;
 
-import java.util.List;
+import java.util.Collection;
 import pl.coderstrust.database.InMemoryDatabase;
 
 public class InvoiceBook {
@@ -11,7 +11,7 @@ public class InvoiceBook {
     database.saveInvoice(invoice);
   }
 
-  public List<Invoice> getInvoices() {
+  public Collection<Invoice> getInvoices() {
     return database.getInvoices();
   }
 }
