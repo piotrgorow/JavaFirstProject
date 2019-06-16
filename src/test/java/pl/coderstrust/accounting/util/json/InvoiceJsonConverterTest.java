@@ -84,7 +84,7 @@ class InvoiceJsonConverterTest {
     // When
     String result = InvoiceJsonConverter.toJson(invoice);
 
-    //then
+    // Then
     assertEquals(expected, result);
   }
 
