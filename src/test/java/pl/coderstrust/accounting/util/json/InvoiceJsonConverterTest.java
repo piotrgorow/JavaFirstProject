@@ -67,7 +67,7 @@ class InvoiceJsonConverterTest {
 
   @Test
   void shouldReturnProperJasonStringWhenInvoiceElementsWasAdded() throws IOException {
-    //given
+    // Given
     Invoice invoice = new Invoice("1", LocalDate.of(2019, 6, 14),
         new Company("Seller", "VAT_23", "ul. Krótka"),
         new Company("Buyer", "VAT_23", "ul. Długa"));
