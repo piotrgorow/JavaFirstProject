@@ -24,8 +24,11 @@ public class InvoiceJsonConverter {
   }
 
   public static Invoice fromJson(String json) throws IOException {
-    if (json == "" || json == null) {
-      throw new IllegalArgumentException("Parameter json cannot be empty or null.");
+    if (json == null) {
+      throw new IllegalArgumentException("Parameter json cannot be null.");
+    }
+    if (json.equals("")) {
+      throw new IllegalArgumentException("Parameter json cannot be empty.");
     }
     return objectMapper.readValue(json, Invoice.class);
   }
