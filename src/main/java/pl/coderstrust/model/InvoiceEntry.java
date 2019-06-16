@@ -11,6 +11,9 @@ public class InvoiceEntry {
   private Vat vatRate;
   private BigDecimal vatValue;
 
+  private InvoiceEntry() {
+  }
+
   public InvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {
     this.description = description;
     this.quantity = quantity;
