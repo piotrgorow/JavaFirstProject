@@ -81,7 +81,7 @@ class InvoiceJsonConverterTest {
         + "\"Cukier\",\"value\":3.5,\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"description\":\"Sól\",\"value\":5"
         + ".64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
 
-    //when
+    // When
     String result = InvoiceJsonConverter.toJson(invoice);
 
     //then
