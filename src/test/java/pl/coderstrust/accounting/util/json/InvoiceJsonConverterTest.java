@@ -20,7 +20,7 @@ class InvoiceJsonConverterTest {
   @ParameterizedTest
   @MethodSource("invoicesParameters")
   void shouldReturnCorrectJsonStringWhenInvoiceObjectIsPassed(Invoice given, String expected) throws IOException {
-    //when
+    // When
     String result = InvoiceJsonConverter.toJson(given);
 
     //then
