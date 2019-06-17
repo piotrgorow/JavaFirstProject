@@ -170,7 +170,7 @@ class InMemoryDatabaseTest {
 
   @Test
   @DisplayName("Should return empty collection for empty database")
-  void shouldReturnEmptyCollectionAfterDatabseWasCleared() {
+  void shouldReturnEmptyCollectionAfterDatabaseWasCleared() {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
     Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
