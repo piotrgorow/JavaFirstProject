@@ -27,7 +27,7 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public Invoice getInvoiceById(String id) {
-    if (findInvoide(id)) {
+    if (findInvoice(id)) {
       return invoices.get(id);
     }
     return null;
@@ -38,7 +38,7 @@ public class InMemoryDatabase implements Database {
     if (invoice == null) {
       throw new IllegalArgumentException("Invoice cannot be null");
     }
-    if (findInvoide(id)) {
+    if (findInvoice(id)) {
       invoices.replace(id, invoice);
       return true;
     }
@@ -52,14 +52,14 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public boolean removeInvoiceById(String id) {
-    if (findInvoide(id)) {
+    if (findInvoice(id)) {
       invoices.remove(id);
       return true;
     }
     return false;
   }
 
-  private boolean findInvoide(String id) {
+  private boolean findInvoice(String id) {
     return invoices.containsKey(id);
   }
 }
