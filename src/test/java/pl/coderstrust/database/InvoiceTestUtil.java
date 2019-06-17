@@ -8,7 +8,7 @@ import pl.coderstrust.model.Vat;
 
 class InvoiceTestUtil {
 
-  static Invoice sampleInvoice(){
+  static Invoice sampleInvoice() {
     Invoice invoice1 = new Invoice("inv1", LocalDate.parse("2019-01-01"),
         InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
     invoice1.addInvoiceEntry("Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
@@ -17,7 +17,7 @@ class InvoiceTestUtil {
     return invoice1;
   }
 
-  static Invoice sampleInvoice2(){
+  static Invoice sampleInvoice2() {
     Invoice invoice2 = new Invoice("inv2", LocalDate.parse("2019-02-01"),
         InvoiceTestUtil.sampleCompany2(), InvoiceTestUtil.sampleCompany3());
     invoice2.addInvoiceEntry("Arbuz", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
@@ -35,15 +35,15 @@ class InvoiceTestUtil {
     return invoice2;
   }
 
-  private static Company sampleCompany1(){
+  private static Company sampleCompany1() {
     return new Company("XYZ", "11111", "London");
   }
 
-  private static Company sampleCompany2(){
+  private static Company sampleCompany2() {
     return new Company("QAZ", "22222", "Chicago");
   }
 
-  private static Company sampleCompany3(){
+  private static Company sampleCompany3() {
     return new Company("PKL", "33333", "Warsaw");
   }
 }

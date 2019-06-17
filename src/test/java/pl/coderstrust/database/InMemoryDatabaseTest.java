@@ -1,14 +1,15 @@
 package pl.coderstrust.database;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,12 +17,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pl.coderstrust.model.Invoice;
 
+
 @DisplayName("InMemoryDatabase Test")
 class InMemoryDatabaseTest {
 
   @Test
   @DisplayName("Should save simple invoice")
-  void shouldSaveSimpleInvoice(){
+  void shouldSaveSimpleInvoice() {
     // Given
     Invoice sampleInvoice = InvoiceTestUtil.sampleInvoice();
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
@@ -47,7 +49,7 @@ class InMemoryDatabaseTest {
 
   @DisplayName("Should return empty collection for no invoice in database")
   @Test
-  void shouldReturnEmptyCollectionForEmptyDatabase(){
+  void shouldReturnEmptyCollectionForEmptyDatabase() {
     // Given
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
 
@@ -79,7 +81,7 @@ class InMemoryDatabaseTest {
   }
 
   @Test
-  void shouldReturnNullWhenInvoiceWithGivenIdDeosNotExist(){
+  void shouldReturnNullWhenInvoiceWithGivenIdDeosNotExist() {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
     Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
@@ -98,7 +100,7 @@ class InMemoryDatabaseTest {
 
   @Test
   @DisplayName("Should update invoice")
-  void shouldUpdateInvoice(){
+  void shouldUpdateInvoice() {
     // Given
     Invoice invoiceToBeUpdated = InvoiceTestUtil.sampleInvoice();
     Invoice anotherInvoice = InvoiceTestUtil.sampleInvoice2();
@@ -118,7 +120,7 @@ class InMemoryDatabaseTest {
 
   @Test
   @DisplayName("Should return false for invoice which does not exists")
-  void shouldReturnFalseWhenInvoiceToUpdateDoesNotExist(){
+  void shouldReturnFalseWhenInvoiceToUpdateDoesNotExist() {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
     Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
@@ -136,7 +138,7 @@ class InMemoryDatabaseTest {
 
   @Test
   @DisplayName("Should throw exception when invoice to replace is null")
-  void shouldThrowExceptionWhenArgumentIsNull(){
+  void shouldThrowExceptionWhenArgumentIsNull() {
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     assertThrows(IllegalArgumentException.class,
         () -> inMemoryDatabase.updateInvoice("inv1", null));
