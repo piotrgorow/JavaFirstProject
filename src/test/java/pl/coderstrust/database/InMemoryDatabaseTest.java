@@ -81,7 +81,7 @@ class InMemoryDatabaseTest {
   }
 
   @Test
-  void shouldReturnNullWhenInvoiceWithGivenIdDeosNotExist() {
+  void shouldReturnNullWhenInvoiceWithGivenIdDoesNotExist() {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
     Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
