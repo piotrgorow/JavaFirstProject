@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,6 +20,7 @@ class InvoiceJsonConverterTest {
 
   @ParameterizedTest
   @MethodSource("invoicesParameters")
+  @DisplayName("Should return correct JSON when invoice object was passed")
   void shouldReturnCorrectJsonStringWhenInvoiceObjectIsPassed(Invoice given, String expected) throws IOException {
     // When
     String result = InvoiceJsonConverter.toJson(given);
@@ -66,6 +68,7 @@ class InvoiceJsonConverterTest {
   }
 
   @Test
+  @DisplayName("Should return proper JSON when invoice elements was added")
   void shouldReturnProperJasonStringWhenInvoiceElementsWasAdded() throws IOException {
     // Given
     Invoice invoice = new Invoice("1", LocalDate.of(2019, 6, 14),
@@ -89,12 +92,14 @@ class InvoiceJsonConverterTest {
   }
 
   @Test
+  @DisplayName("Should throw exception when passed parameter invoice is null")
   void shouldThrowExceptionWhenPassedParameterInvoiceIsNull() {
     assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.toJson(null));
   }
 
   @ParameterizedTest
   @MethodSource("jasonParameters")
+  @DisplayName("Should return correct invoice object when JSON was passed")
   void shouldReturnCorrectInvoiceObjectWhenJsonStringIsPassed(String given, Invoice expected) throws IOException {
     // When
     Invoice result = InvoiceJsonConverter.fromJson(given);
@@ -137,6 +142,7 @@ class InvoiceJsonConverterTest {
   }
 
   @Test
+  @DisplayName("Should return proper invoice object when invoice elements was added")
   void shouldReturnProperInvoiceObjectWhenInvoiceElementsWasAdded() throws IOException {
     // Given
     String given = "{\"id\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":\"Seller\","
@@ -160,12 +166,14 @@ class InvoiceJsonConverterTest {
   }
 
   @Test
-  void shouldThrowExceptionWhenPassedParameterJsonIsEmpty() {
-    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(""));
+  @DisplayName("Should throw exception when passed parameter JSON is null")
+  void shouldThrowExceptionWhenPassedParameterJsonIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(null));
   }
 
   @Test
-  void shouldThrowExceptionWhenPassedParameterJsonIsNull() {
-    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(null));
+  @DisplayName("Should throw exception when passed parameter JSON is empty")
+  void shouldThrowExceptionWhenPassedParameterJsonIsEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> InvoiceJsonConverter.fromJson(""));
   }
 }
