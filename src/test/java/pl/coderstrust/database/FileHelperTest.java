@@ -33,11 +33,11 @@ class FileHelperTest {
   @Test
   @DisplayName("Should write throw an exception when the file is not find")
   void shouldWriteThrowExceptionWhenFileNotFound() {
-    //given
+    //Given
     FileHelper fileHelper = new FileHelper();
     List<String> resultLines = new ArrayList<>();
     resultLines.add("23");
-    //then
+    //Then
     assertThrows(FileNotFoundException.class,
         () -> fileHelper.writeLines(resultLines, "src/main/resources/test1.txt"));
   }
@@ -45,37 +45,37 @@ class FileHelperTest {
   @Test
   @DisplayName("Should read line from file")
   void shouldReadLinesFromFile() throws IOException {
-    //given
+    //Given
     FileHelper fileHelper = new FileHelper();
     String inputFile = "src/test/resources/input.txt";
     List<String> resultLines = new ArrayList<>();
     resultLines.add("12345");
     resultLines.add("12345");
 
-    //when
+    //When
     List<String> actual;
     actual = fileHelper.readLines(inputFile);
 
-    //then
+    //Then
     assertEquals(resultLines, actual);
   }
 
   @Test
   @DisplayName("Should write line to file")
   void writeLinesToFile() throws IOException {
-    //given
+    //Given
     FileHelper fileHelper = new FileHelper();
     String outputFile = "src/test/resources/output.txt";
     String expectedFile = "src/test/resources/expected.txt";
     List<String> resultLines = new ArrayList<>();
     resultLines.add("12345");
 
-    //when
+    //When
     fileHelper.writeLines(resultLines, outputFile);
     byte[] expected = Files.readAllBytes(Paths.get(expectedFile));
     byte[] actual = Files.readAllBytes(Paths.get(outputFile));
 
-    //then
+    //Then
     assertArrayEquals(expected, actual);
   }
 }
