@@ -46,11 +46,6 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public void removeAllInvoices() {
-    invoices.clear();
-  }
-
-  @Override
   public boolean removeInvoiceById(String id) {
     if (findInvoice(id)) {
       invoices.remove(id);

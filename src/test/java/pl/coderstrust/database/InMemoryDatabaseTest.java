@@ -169,26 +169,6 @@ class InMemoryDatabaseTest {
   }
 
   @Test
-  @DisplayName("Should return empty collection for empty database")
-  void shouldReturnEmptyCollectionAfterDatabaseWasCleared() {
-    // Given
-    Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
-    Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
-    Invoice sampleInvoice3 = InvoiceTestUtil.sampleInvoice3();
-    InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
-    inMemoryDatabase.saveInvoice(sampleInvoice1);
-    inMemoryDatabase.saveInvoice(sampleInvoice2);
-    inMemoryDatabase.saveInvoice(sampleInvoice3);
-
-    // When
-    inMemoryDatabase.removeAllInvoices();
-    Collection<Invoice> result = inMemoryDatabase.getInvoices();
-
-    // Then
-    assertTrue(result.isEmpty());
-  }
-
-  @Test
   @DisplayName("Should return null for invoice which was deleted")
   void shouldReturnNullForRemovedInvoice() {
     // Given

@@ -13,7 +13,5 @@ public interface Database {
 
   boolean updateInvoice(String id,Invoice invoice);
 
-  void removeAllInvoices();
-
   boolean removeInvoiceById(String id);
 }
