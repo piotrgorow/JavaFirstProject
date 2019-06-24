@@ -74,15 +74,15 @@ class InvoiceJsonConverterTest {
     Invoice invoice = new Invoice("1", LocalDate.of(2019, 6, 14),
         new Company("Seller", "VAT_23", "ul. Krótka"),
         new Company("Buyer", "VAT_23", "ul. Długa"));
-    invoice.addInvoiceEntry("Mąka", BigDecimal.valueOf(10.4), Vat.VAT_23);
-    invoice.addInvoiceEntry("Cukier", BigDecimal.valueOf(3.5), Vat.VAT_23);
-    invoice.addInvoiceEntry("Sól", BigDecimal.valueOf(5.64), Vat.VAT_23);
+    invoice.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
+    invoice.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
+    invoice.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
     String expected = "{\"id\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":\"Seller\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Krótka\"},\"buyer\":{\"name\":\"Buyer\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Długa\"},\"invoiceEntries\":"
-        + "[{\"description\":\"Mąka\",\"value\":10.4,\"vatRate\":\"VAT_23\",\"vatValue\":2.392},{\"description\":"
-        + "\"Cukier\",\"value\":3.5,\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"description\":\"Sól\",\"value\":5"
-        + ".64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
+        + "[{\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\",\"vatValue\":2.392},"
+        + "{\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,\"vatRate\":\"VAT_23\",\"vatValue\":0.805},"
+        + "{\"description\":\"Sól\",\"quantity\":3,\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
 
     // When
     String result = InvoiceJsonConverter.toJson(invoice);
@@ -148,15 +148,15 @@ class InvoiceJsonConverterTest {
     String given = "{\"id\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":\"Seller\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Krótka\"},\"buyer\":{\"name\":\"Buyer\","
         + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":\"ul. Długa\"},\"invoiceEntries\":"
-        + "[{\"description\":\"Mąka\",\"value\":10.4,\"vatRate\":\"VAT_23\",\"vatValue\":2.392},{\"description\":"
-        + "\"Cukier\",\"value\":3.5,\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"description\":\"Sól\",\"value\":5"
-        + ".64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
+        + "[{\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\",\"vatValue\":2.392},"
+        + "{\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,\"vatRate\":\"VAT_23\",\"vatValue\":0.805},"
+        + "{\"description\":\"Sól\",\"quantity\":3,\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
     Invoice expected = new Invoice("1", LocalDate.of(2019, 6, 14),
         new Company("Seller", "VAT_23", "ul. Krótka"),
         new Company("Buyer", "VAT_23", "ul. Długa"));
-    expected.addInvoiceEntry("Mąka", BigDecimal.valueOf(10.4), Vat.VAT_23);
-    expected.addInvoiceEntry("Cukier", BigDecimal.valueOf(3.5), Vat.VAT_23);
-    expected.addInvoiceEntry("Sól", BigDecimal.valueOf(5.64), Vat.VAT_23);
+    expected.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
+    expected.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
+    expected.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
 
     // When
     Invoice result = InvoiceJsonConverter.fromJson(given);
