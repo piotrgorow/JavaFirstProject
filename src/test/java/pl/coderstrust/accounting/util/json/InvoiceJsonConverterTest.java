@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import pl.coderstrust.database.InvoiceTestUtil;
 import pl.coderstrust.model.Company;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.Vat;
@@ -50,7 +51,7 @@ class InvoiceJsonConverterTest {
                 + "\"buyer\":{\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
                 + "\"address\":\"ul. Długa\"},\"invoiceEntries\":[]}"),
         Arguments.of(new Invoice("1", LocalDate.of(2019, 6, 14),
-                new Company("Seller", "VAT_23", "ul. Krótka"),
+                new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
                 null),
             "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
                 + "\"seller\":{\"name\":\"Seller\",\"taxIdentificationNumber\":\"VAT_23\","
@@ -119,8 +120,8 @@ class InvoiceJsonConverterTest {
   void shouldReturnProperJasonStringWhenInvoiceElementsWasAdded() throws IOException {
     // Given
     Invoice invoice = new Invoice("1", LocalDate.of(2019, 6, 14),
-        new Company("Seller", "VAT_23", "ul. Krótka"),
-        new Company("Buyer", "VAT_23", "ul. Długa"));
+        new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+        new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
     invoice.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
     invoice.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
     invoice.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
@@ -176,8 +177,8 @@ class InvoiceJsonConverterTest {
             + "{\"description\":\"Sól\",\"quantity\":3,\"value\":5.64,\"vatRate\":\"VAT_23\","
             + "\"vatValue\":1.2972}]}";
     Invoice expected = new Invoice("1", LocalDate.of(2019, 6, 14),
-        new Company("Seller", "VAT_23", "ul. Krótka"),
-        new Company("Buyer", "VAT_23", "ul. Długa"));
+        new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+        new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
     expected.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
     expected.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
     expected.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);

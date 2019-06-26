@@ -2,11 +2,12 @@ package pl.coderstrust.database;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import pl.coderstrust.model.Address;
 import pl.coderstrust.model.Company;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.model.Vat;
 
-class InvoiceTestUtil {
+public class InvoiceTestUtil {
 
   static String sampleInvoiceJson = "{\"id\":1,\"invoiceNumber\":\"inv1\",\"date\":\"2019-01-01\","
       + "\"seller\":{\"name\":\"XYZ\",\"taxIdentificationNumber\":\"11111\","
@@ -91,14 +92,22 @@ class InvoiceTestUtil {
   }
 
   private static Company sampleCompany1() {
-    return new Company("XYZ", "11111", "London");
+    return new Company("XYZ", "11111", sampleAddress1());
   }
 
   private static Company sampleCompany2() {
-    return new Company("QAZ", "22222", "Chicago");
+    return new Company("QAZ", "22222", sampleAddress1());
   }
 
   private static Company sampleCompany3() {
-    return new Company("PKL", "33333", "Warsaw");
+    return new Company("PKL", "33333", sampleAddress2());
+  }
+
+  public static Address sampleAddress1() {
+    return new Address("Korkowa 2/12", "00-123", "Warszawa");
+  }
+
+  private static Address sampleAddress2() {
+    return new Address("Testowa 15A", "31-123", "Kielce", "DE");
   }
 }

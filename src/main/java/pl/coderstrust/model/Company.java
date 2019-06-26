@@ -6,12 +6,12 @@ public class Company {
 
   private String name;
   private String taxIdentificationNumber;
-  private String address;
+  private Address address;
 
   private Company() {
   }
 
-  public Company(String name, String taxIdentificationNumber, String address) {
+  public Company(String name, String taxIdentificationNumber, Address address) {
     this.name = name;
     this.taxIdentificationNumber = taxIdentificationNumber;
     this.address = address;
@@ -25,8 +25,16 @@ public class Company {
     return taxIdentificationNumber;
   }
 
-  public String getAddress() {
+  public void setTaxIdentificationNumber(String taxIdentificationNumber) {
+    this.taxIdentificationNumber = taxIdentificationNumber;
+  }
+
+  public Address getAddress() {
     return address;
+  }
+
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
   @Override
