@@ -29,36 +29,20 @@ public class Invoice {
     return id;
   }
 
-  public void setId(String id) {
-    this.id = id;
-  }
-
   public LocalDate getDate() {
     return date;
-  }
-
-  public void setDate(LocalDate date) {
-    this.date = date;
   }
 
   public Company getSeller() {
     return seller;
   }
 
-  public void setSeller(Company seller) {
-    this.seller = seller;
-  }
-
   public Company getBuyer() {
     return buyer;
   }
 
-  public void setBuyer(Company buyer) {
-    this.buyer = buyer;
-  }
-
   public List<InvoiceEntry> getInvoiceEntries() {
-    return invoiceEntries;
+    return new ArrayList<>(invoiceEntries);
   }
 
   public void addInvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {

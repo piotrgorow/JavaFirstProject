@@ -26,40 +26,20 @@ public class InvoiceEntry {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public BigDecimal getValue() {
     return value;
-  }
-
-  public void setValue(BigDecimal value) {
-    this.value = value;
   }
 
   public Vat getVatRate() {
     return vatRate;
   }
 
-  public void setVatRate(Vat vatRate) {
-    this.vatRate = vatRate;
-  }
-
   public BigDecimal getVatValue() {
     return vatValue;
   }
 
-  public void setVatValue(BigDecimal vatValue) {
-    this.vatValue = vatValue;
-  }
-
   public int getQuantity() {
     return quantity;
-  }
-
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
   }
 
   @Override
