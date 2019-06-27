@@ -1,5 +1,6 @@
 package pl.coderstrust.database;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,6 +33,9 @@ class FileHelper {
     }
     if (filePath == null) {
       throw new IllegalArgumentException("File path cannot be null");
+    }
+    if (!new File(filePath).exists()) {
+      throw new FileNotFoundException();
     }
     try (PrintWriter printWriter = new PrintWriter(filePath)) {
       for (String line : lines) {
