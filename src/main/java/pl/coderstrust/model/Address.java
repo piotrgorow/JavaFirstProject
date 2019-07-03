@@ -17,7 +17,7 @@ public class Address {
     this.streetAddress = streetAddress;
     this.postalCode = postalCode;
     this.city = city;
-    this.countryCode = "PL";
+    countryCode = "PL";
   }
 
   public Address(String streetAddress, String postalCode, String city, String countryCode) {
@@ -52,10 +52,10 @@ public class Address {
       return false;
     }
     Address address = (Address) o;
-    return Objects.equals(streetAddress, address.streetAddress) &&
-        Objects.equals(postalCode, address.postalCode) &&
-        Objects.equals(city, address.city) &&
-        Objects.equals(countryCode, address.countryCode);
+    return Objects.equals(streetAddress, address.streetAddress)
+        && Objects.equals(postalCode, address.postalCode)
+        && Objects.equals(city, address.city)
+        && Objects.equals(countryCode, address.countryCode);
   }
 
   @Override

@@ -10,7 +10,7 @@ import pl.coderstrust.model.Address;
 
 public class AddressValidator implements Validator<Address> {
 
-  private final static Pattern POSTAL_CODE_PATTERN = Pattern.compile("\\d{2}-\\d{3}");
+  private static final Pattern POSTAL_CODE_PATTERN = Pattern.compile("\\d{2}-\\d{3}");
 
   @Override
   public List<String> validate(Address address) {
@@ -38,6 +38,4 @@ public class AddressValidator implements Validator<Address> {
     }
     return result;
   }
-
-
 }

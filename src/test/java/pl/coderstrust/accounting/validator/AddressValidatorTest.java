@@ -55,5 +55,4 @@ class AddressValidatorTest {
     assertEquals(1, result.size());
     assertTrue(result.get(0).toLowerCase().contains("postal code"));
   }
-
 }
