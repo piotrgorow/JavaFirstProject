@@ -30,18 +30,6 @@ class FileHelperTest {
   }
 
   @Test
-  @DisplayName("Should write throw an exception when the file is not find")
-  void shouldWriteThrowExceptionWhenFileNotFound() {
-    //Given
-    FileHelper fileHelper = new FileHelper();
-    List<String> resultLines = new ArrayList<>();
-    resultLines.add("23");
-    //Then
-    assertThrows(FileNotFoundException.class,
-        () -> fileHelper.writeLines(resultLines, "src/main/resources/test1.txt"));
-  }
-
-  @Test
   @DisplayName("Should read line from file")
   void shouldReadLinesFromFile() throws IOException {
     //Given
@@ -70,7 +58,7 @@ class FileHelperTest {
     resultLines.add("12345");
 
     //When
-    fileHelper.writeLines(resultLines, outputFile);
+    fileHelper.writeLines(resultLines, outputFile, false);
     byte[] expected = Files.readAllBytes(Paths.get(expectedFile));
     byte[] actual = Files.readAllBytes(Paths.get(outputFile));
 

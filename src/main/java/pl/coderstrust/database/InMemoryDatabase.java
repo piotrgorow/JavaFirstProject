@@ -6,7 +6,8 @@ import pl.coderstrust.model.Invoice;
 
 public class InMemoryDatabase implements Database {
 
-  private final HashMap<String, Invoice> invoices;
+  private final HashMap<Long, Invoice> invoices;
+  private Long databaseId = 1L;
 
   public InMemoryDatabase() {
     invoices = new HashMap<>();
@@ -17,7 +18,9 @@ public class InMemoryDatabase implements Database {
     if (invoice == null) {
       throw new IllegalArgumentException("Invoice cannot be null");
     }
+    invoice.setId(databaseId);
     invoices.put(invoice.getId(), invoice);
+    databaseId++;
   }
 
   @Override
@@ -26,7 +29,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public Invoice getInvoiceById(String id) {
+  public Invoice getInvoiceById(Long id) {
     if (findInvoice(id)) {
       return invoices.get(id);
     }
@@ -34,7 +37,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public boolean updateInvoice(String id, Invoice invoice) {
+  public boolean updateInvoice(Long id, Invoice invoice) {
     if (invoice == null) {
       throw new IllegalArgumentException("Invoice cannot be null");
     }
@@ -46,7 +49,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public boolean removeInvoiceById(String id) {
+  public boolean removeInvoiceById(Long id) {
     if (findInvoice(id)) {
       invoices.remove(id);
       return true;
@@ -54,7 +57,7 @@ public class InMemoryDatabase implements Database {
     return false;
   }
 
-  private boolean findInvoice(String id) {
+  private boolean findInvoice(Long id) {
     return invoices.containsKey(id);
   }
 }

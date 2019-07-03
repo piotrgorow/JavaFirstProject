@@ -8,22 +8,22 @@ import pl.coderstrust.model.Invoice;
 
 public class InvoiceJsonConverter {
 
-  private static ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-  static {
+  InvoiceJsonConverter() {
     objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
   }
 
-  public static String toJson(Invoice invoice) throws IOException {
+  public String toJson(Invoice invoice) throws IOException {
     if (invoice == null) {
       throw new IllegalArgumentException("Parameter invoice cannot be null.");
     }
     return objectMapper.writeValueAsString(invoice);
   }
 
-  public static Invoice fromJson(String json) throws IOException {
+  public Invoice fromJson(String json) throws IOException {
     if (json == null || json.equals("")) {
       throw new IllegalArgumentException("Parameter json cannot be null or empty.");
     }

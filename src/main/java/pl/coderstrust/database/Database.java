@@ -1,17 +1,18 @@
 package pl.coderstrust.database;
 
+import java.io.IOException;
 import java.util.Collection;
 import pl.coderstrust.model.Invoice;
 
 public interface Database {
 
-  void saveInvoice(Invoice invoice);
+  void saveInvoice(Invoice invoice) throws IOException;
 
-  Invoice getInvoiceById(String id);
+  Invoice getInvoiceById(Long id) throws IOException;
 
-  Collection<Invoice> getInvoices();
+  Collection<Invoice> getInvoices() throws IOException;
 
-  boolean updateInvoice(String id, Invoice invoice);
+  boolean updateInvoice(Long id,Invoice invoice) throws IOException;
 
-  boolean removeInvoiceById(String id);
+  boolean removeInvoiceById(Long id) throws IOException;
 }

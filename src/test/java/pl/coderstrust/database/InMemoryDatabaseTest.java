@@ -21,6 +21,14 @@ import pl.coderstrust.model.Invoice;
 @DisplayName("InMemoryDatabase Test")
 class InMemoryDatabaseTest {
 
+  private static Stream<Arguments> getInvoiceByIdParameters() {
+    return Stream.of(
+      Arguments.of(1L, InvoiceTestUtil.sampleInvoiceFromFile()),
+      Arguments.of(2L, InvoiceTestUtil.sampleInvoiceFromFile2()),
+      Arguments.of(3L, InvoiceTestUtil.sampleInvoiceFromFile3())
+    );
+  }
+
   @Test
   @DisplayName("Should save simple invoice")
   void shouldSaveSimpleInvoice() {
@@ -63,7 +71,7 @@ class InMemoryDatabaseTest {
   @ParameterizedTest
   @MethodSource("getInvoiceByIdParameters")
   @DisplayName("Should return invoice by ID")
-  void shouldReturnInvoiceById(String id, Invoice expected) {
+  void shouldReturnInvoiceById(Long id, Invoice expected) {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
     Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
@@ -92,7 +100,7 @@ class InMemoryDatabaseTest {
     inMemoryDatabase.saveInvoice(sampleInvoice3);
 
     // When
-    Invoice result = inMemoryDatabase.getInvoiceById("inv100");
+    Invoice result = inMemoryDatabase.getInvoiceById(100L);
 
     // Then
     assertNull(result);
@@ -111,8 +119,8 @@ class InMemoryDatabaseTest {
     Invoice expected = InvoiceTestUtil.sampleInvoice3();
 
     // When
-    inMemoryDatabase.updateInvoice("inv1", invoiceToUpdate);
-    Invoice result = inMemoryDatabase.getInvoiceById("inv1");
+    inMemoryDatabase.updateInvoice(1L, invoiceToUpdate);
+    Invoice result = inMemoryDatabase.getInvoiceById(1L);
 
     // Then
     assertEquals(expected, result);
@@ -130,7 +138,7 @@ class InMemoryDatabaseTest {
     inMemoryDatabase.saveInvoice(sampleInvoice2);
 
     // When
-    boolean result = inMemoryDatabase.updateInvoice("inv10", invoiceToUpdate);
+    boolean result = inMemoryDatabase.updateInvoice(10L, invoiceToUpdate);
 
     // Then
     assertFalse(result);
@@ -141,7 +149,7 @@ class InMemoryDatabaseTest {
   void shouldThrowExceptionWhenArgumentIsNull() {
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     assertThrows(IllegalArgumentException.class,
-        () -> inMemoryDatabase.updateInvoice("inv1", null));
+      () -> inMemoryDatabase.updateInvoice(1L, null));
   }
 
   @Test
@@ -181,8 +189,8 @@ class InMemoryDatabaseTest {
     inMemoryDatabase.saveInvoice(sampleInvoice3);
 
     // When
-    inMemoryDatabase.removeInvoiceById("inv1");
-    Invoice result = inMemoryDatabase.getInvoiceById("inv1");
+    inMemoryDatabase.removeInvoiceById(1L);
+    Invoice result = inMemoryDatabase.getInvoiceById(1L);
 
     // Then
     assertNull(result);
@@ -201,17 +209,9 @@ class InMemoryDatabaseTest {
     inMemoryDatabase.saveInvoice(sampleInvoice3);
 
     // When
-    boolean result = inMemoryDatabase.removeInvoiceById("inv50");
+    boolean result = inMemoryDatabase.removeInvoiceById(50L);
 
     // Then
     assertFalse(result);
-  }
-
-  private static Stream<Arguments> getInvoiceByIdParameters() {
-    return Stream.of(
-        Arguments.of("inv1", InvoiceTestUtil.sampleInvoice()),
-        Arguments.of("inv2", InvoiceTestUtil.sampleInvoice2()),
-        Arguments.of("inv3", InvoiceTestUtil.sampleInvoice3())
-    );
   }
 }

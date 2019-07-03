@@ -8,7 +8,8 @@ import java.util.Objects;
 
 public class Invoice {
 
-  private String id;
+  private Long id;
+  private String invoiceNumber;
   private LocalDate date;
   private Company seller;
   private Company buyer;
@@ -17,16 +18,20 @@ public class Invoice {
   private Invoice() {
   }
 
-  public Invoice(String id, LocalDate date, Company seller, Company buyer) {
-    this.id = id;
+  public Invoice(String invoiceNumber, LocalDate date, Company seller, Company buyer) {
+    this.invoiceNumber = invoiceNumber;
     this.date = date;
     this.seller = seller;
     this.buyer = buyer;
     invoiceEntries = new ArrayList<>();
   }
 
-  public String getId() {
-    return id;
+  public String getInvoiceNumber() {
+    return invoiceNumber;
+  }
+
+  public void setInvoiceNumber(String invoiceNumber) {
+    this.invoiceNumber = invoiceNumber;
   }
 
   public LocalDate getDate() {
@@ -42,11 +47,19 @@ public class Invoice {
   }
 
   public List<InvoiceEntry> getInvoiceEntries() {
-    return new ArrayList<>(invoiceEntries);
+    return invoiceEntries;
   }
 
   public void addInvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {
     invoiceEntries.add(new InvoiceEntry(description, quantity, value, vatRate));
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   @Override
@@ -59,6 +72,7 @@ public class Invoice {
     }
     Invoice invoice = (Invoice) o;
     return Objects.equals(id, invoice.id)
+        && Objects.equals(invoiceNumber, invoice.invoiceNumber)
         && Objects.equals(date, invoice.date)
         && Objects.equals(seller, invoice.seller)
         && Objects.equals(buyer, invoice.buyer)
@@ -67,6 +81,6 @@ public class Invoice {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, date, seller, buyer, invoiceEntries);
+    return Objects.hash(id, invoiceNumber, date, seller, buyer, invoiceEntries);
   }
 }
