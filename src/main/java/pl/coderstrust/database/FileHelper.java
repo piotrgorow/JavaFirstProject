@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.io.input.ReversedLinesFileReader;
-import pl.coderstrust.configuration.Configuration;
+import pl.coderstrust.configuration.InvoiceConfig;
 
 public class FileHelper {
 
@@ -48,10 +48,10 @@ public class FileHelper {
     }
   }
 
-  public void checkFilesExistence() throws IOException {
-    File invoiceFile = new File(Configuration.INVOICE_DATABASE_FILE);
+  void checkFilesExistence() throws IOException {
+    File invoiceFile = new File(InvoiceConfig.INVOICE_DATABASE_FILE);
     if (!invoiceFile.exists()) {
-      PrintWriter printWriter = new PrintWriter(Configuration.INVOICE_DATABASE_FILE);
+      PrintWriter printWriter = new PrintWriter(InvoiceConfig.INVOICE_DATABASE_FILE);
     }
   }
 

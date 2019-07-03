@@ -116,6 +116,7 @@
         <configuration>
           <excludes>
             <exclude>/pl/coderstrust/model/**</exclude>
+            <exclude>/pl/coderstrust/configuration/**</exclude>
           </excludes>
         </configuration>
         <executions>

@@ -9,7 +9,7 @@ import pl.coderstrust.model.Vat;
 
 public class InvoiceTestUtil {
 
-  static String sampleInvoiceJson = "{\"id\":1,\"invoiceNumber\":\"inv1\",\"date\":\"2019-01-01\","
+  public static String sampleInvoiceJson = "{\"id\":1,\"invoiceNumber\":\"inv1\",\"date\":\"2019-01-01\","
       + "\"seller\":{\"name\":\"XYZ\",\"taxIdentificationNumber\":\"11111\","
       + "\"address\":\"London\"},\"buyer\":{\"name\":\"QAZ\",\"taxIdentificationNumber\":\"22222\","
       + "\"address\":\"Chicago\"},\"invoiceEntries\":[{\"description\":\"Kiwi\",\"quantity\":10,"
@@ -43,7 +43,7 @@ public class InvoiceTestUtil {
     return invoice1;
   }
 
-  static Invoice sampleInvoiceFromFile() {
+  public static Invoice sampleInvoiceFromFile() {
     Invoice invoice1 = new Invoice("inv1", LocalDate.parse("2019-01-01"),
         InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
     invoice1.addInvoiceEntry("Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
@@ -62,7 +62,7 @@ public class InvoiceTestUtil {
     return invoice2;
   }
 
-  static Invoice sampleInvoiceFromFile2() {
+  public static Invoice sampleInvoiceFromFile2() {
     Invoice invoice2 = new Invoice("inv2", LocalDate.parse("2019-02-01"),
         InvoiceTestUtil.sampleCompany2(), InvoiceTestUtil.sampleCompany3());
     invoice2.addInvoiceEntry("Arbuz", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);

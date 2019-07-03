@@ -23,9 +23,9 @@ class InMemoryDatabaseTest {
 
   private static Stream<Arguments> getInvoiceByIdParameters() {
     return Stream.of(
-      Arguments.of(1L, InvoiceTestUtil.sampleInvoiceFromFile()),
-      Arguments.of(2L, InvoiceTestUtil.sampleInvoiceFromFile2()),
-      Arguments.of(3L, InvoiceTestUtil.sampleInvoiceFromFile3())
+        Arguments.of(1L, InvoiceTestUtil.sampleInvoiceFromFile()),
+        Arguments.of(2L, InvoiceTestUtil.sampleInvoiceFromFile2()),
+        Arguments.of(3L, InvoiceTestUtil.sampleInvoiceFromFile3())
     );
   }
 
@@ -89,6 +89,7 @@ class InMemoryDatabaseTest {
   }
 
   @Test
+  @DisplayName("Should return null when invoice with given ID does not exist")
   void shouldReturnNullWhenInvoiceWithGivenIdDoesNotExist() {
     // Given
     Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();

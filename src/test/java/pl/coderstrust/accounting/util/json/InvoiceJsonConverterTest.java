@@ -173,13 +173,13 @@ class InvoiceJsonConverterTest {
             new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
             new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
         Arguments.of("{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":null,"
-                    + "\"buyer\":{\"name\":"
-                    + "\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
-                    + "\"address\":{\"streetAddress\":"
-                    + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
-                    + "\"countryCode\":\"PL\"}},\"invoiceEntries\":[]}",
-                new Invoice("1", LocalDate.of(2019, 6, 14), null,
-                    new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
+                + "\"buyer\":{\"name\":"
+                + "\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
+                + "\"address\":{\"streetAddress\":"
+                + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
+                + "\"countryCode\":\"PL\"}},\"invoiceEntries\":[]}",
+            new Invoice("1", LocalDate.of(2019, 6, 14), null,
+                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
         Arguments.of("{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
             + "\"seller\":{\"name\":\"Seller\","
             + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"

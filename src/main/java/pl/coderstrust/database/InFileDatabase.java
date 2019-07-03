@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
-import pl.coderstrust.configuration.Configuration;
+import pl.coderstrust.configuration.InvoiceConfig;
 import pl.coderstrust.model.Invoice;
 
 public class InFileDatabase implements Database {
@@ -18,12 +18,12 @@ public class InFileDatabase implements Database {
   private final List<String> invoiceToSave = new ArrayList<>();
   private Long databaseId;
 
-  InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter) throws IOException {
+  public InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter) throws IOException {
     this.fileHelper = fileHelper;
     this.invoiceJsonConverter = invoiceJsonConverter;
     invoices = new HashMap<>();
     fileHelper.checkFilesExistence();
-    String lastLine = fileHelper.getLastLine(Configuration.INVOICE_DATABASE_FILE);
+    String lastLine = fileHelper.getLastLine(InvoiceConfig.INVOICE_DATABASE_FILE);
     if (lastLine.equals("")) {
       databaseId = 0L;
     } else {
@@ -39,7 +39,7 @@ public class InFileDatabase implements Database {
     invoiceToSave.clear();
     invoice.setId(databaseId + 1);
     invoiceToSave.add(invoiceJsonConverter.toJson(invoice));
-    fileHelper.writeLines(invoiceToSave, Configuration.INVOICE_DATABASE_FILE, true);
+    fileHelper.writeLines(invoiceToSave, InvoiceConfig.INVOICE_DATABASE_FILE, true);
     databaseId = invoice.getId();
   }
 
@@ -90,7 +90,7 @@ public class InFileDatabase implements Database {
 
   private void loadHashMap() throws IOException {
     invoices.clear();
-    List<String> invoicesFromFile = fileHelper.readLines(Configuration.INVOICE_DATABASE_FILE);
+    List<String> invoicesFromFile = fileHelper.readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
     Invoice jsonInvoice;
     for (String inv : invoicesFromFile) {
       jsonInvoice = invoiceJsonConverter.fromJson(inv);
@@ -103,6 +103,6 @@ public class InFileDatabase implements Database {
     for (Invoice inv : invoices.values()) {
       invoiceToSave.add(invoiceJsonConverter.toJson(inv));
     }
-    fileHelper.writeLines(invoiceToSave, Configuration.INVOICE_DATABASE_FILE, false);
+    fileHelper.writeLines(invoiceToSave, InvoiceConfig.INVOICE_DATABASE_FILE, false);
   }
 }
