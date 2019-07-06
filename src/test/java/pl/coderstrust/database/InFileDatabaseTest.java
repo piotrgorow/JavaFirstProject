@@ -46,7 +46,14 @@ class InFileDatabaseTest {
   void shouldProcessProvidedInvoiceAndSaveItToTheOutputFIle() throws IOException {
     // Given
     Invoice invoiceToSave = InvoiceTestUtil.sampleInvoice();
-    String invoiceToSaveAsJson = "{\"id\":1,\"invoiceNumber\":\"inv1\",\"date\":\"2019-01-01\",\"seller\":{\"name\":\"XYZ\",\"taxIdentificationNumber\":\"11111\",\"address\":\"London\"},\"buyer\":{\"name\":\"QAZ\",\"taxIdentificationNumber\":\"22222\",\"address\":\"Chicago\"},\"invoiceEntries\":[{\"description\":\"Kiwi\",\"quantity\":10,\"value\":125.23,\"vatRate\":\"VAT_23\",\"vatValue\":28.8029},{\"description\":\"Jablka\",\"quantity\":100,\"value\":1.99,\"vatRate\":\"VAT_8\",\"vatValue\":0.1592},{\"description\":\"Pomarancze\",\"quantity\":254,\"value\":99.0,\"vatRate\":\"VAT_0\",\"vatValue\":0.00}]}";
+    String invoiceToSaveAsJson = "{\"id\":1,\"invoiceNumber\":\"inv1\",\"date\":\"2019-01-01\","
+        + "\"seller\":{\"name\":\"XYZ\",\"taxIdentificationNumber\":\"11111\",\"address\":"
+        + "\"London\"},\"buyer\":{\"name\":\"QAZ\",\"taxIdentificationNumber\":\"22222\","
+        + "\"address\":\"Chicago\"},\"invoiceEntries\":[{\"description\":\"Kiwi\","
+        + "\"quantity\":10,\"value\":125.23,\"vatRate\":\"VAT_23\",\"vatValue\":28.8029},"
+        + "{\"description\":\"Jablka\",\"quantity\":100,\"value\":1.99,\"vatRate\":\"VAT_8\","
+        + "\"vatValue\":0.1592},{\"description\":\"Pomarancze\",\"quantity\":254,\"value\":99.0,"
+        + "\"vatRate\":\"VAT_0\",\"vatValue\":0.00}]}";
     doReturn(invoiceToSaveAsJson).when(invoiceJsonConverter).toJson(invoiceToSave);
 
     // When
@@ -75,7 +82,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-      .readLines(Configuration.INVOICE_DATABASE_FILE);
+        .readLines(Configuration.INVOICE_DATABASE_FILE);
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);
@@ -103,7 +110,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-      .readLines(Configuration.INVOICE_DATABASE_FILE);
+        .readLines(Configuration.INVOICE_DATABASE_FILE);
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);
@@ -130,7 +137,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-      .readLines(Configuration.INVOICE_DATABASE_FILE);
+        .readLines(Configuration.INVOICE_DATABASE_FILE);
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);

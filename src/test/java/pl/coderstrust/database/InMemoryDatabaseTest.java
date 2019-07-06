@@ -149,7 +149,7 @@ class InMemoryDatabaseTest {
   void shouldThrowExceptionWhenArgumentIsNull() {
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     assertThrows(IllegalArgumentException.class,
-      () -> inMemoryDatabase.updateInvoice(1L, null));
+        () -> inMemoryDatabase.updateInvoice(1L, null));
   }
 
   @Test

@@ -18,8 +18,7 @@ public class InFileDatabase implements Database {
   private final List<String> invoiceToSave = new ArrayList<>();
   private Long databaseId;
 
-  InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter)
-      throws IOException {
+  InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter) throws IOException {
     this.fileHelper = fileHelper;
     this.invoiceJsonConverter = invoiceJsonConverter;
     invoices = new HashMap<>();

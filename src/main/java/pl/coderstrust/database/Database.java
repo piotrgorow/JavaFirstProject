@@ -12,7 +12,7 @@ public interface Database {
 
   Collection<Invoice> getInvoices() throws IOException;
 
-  boolean updateInvoice(Long id,Invoice invoice) throws IOException;
+  boolean updateInvoice(Long id, Invoice invoice) throws IOException;
 
   boolean removeInvoiceById(Long id) throws IOException;
 }

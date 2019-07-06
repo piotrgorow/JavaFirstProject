@@ -30,10 +30,6 @@ public class Invoice {
     return invoiceNumber;
   }
 
-  public void setInvoiceNumber(String invoiceNumber) {
-    this.invoiceNumber = invoiceNumber;
-  }
-
   public LocalDate getDate() {
     return date;
   }
@@ -81,6 +77,7 @@ public class Invoice {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, invoiceNumber, date, seller, buyer, invoiceEntries);
+    return Objects.hash(id, invoiceNumber, date, seller, buyer,
+        invoiceEntries);
   }
 }
