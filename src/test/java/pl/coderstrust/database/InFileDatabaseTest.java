@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -172,5 +173,45 @@ class InFileDatabaseTest {
     // Then
     assertTrue(result.isEmpty());
     verify(fileHelper).readLines(Configuration.INVOICE_DATABASE_FILE);
+  }
+
+  @Test
+  @DisplayName("Should throw exception when parameter invoice is null")
+  void shouldThrowExceptionWhenParameterInvoiceIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> inFileDatabase.updateInvoice(1L, null));
+  }
+
+  @Test
+  @DisplayName("Should correct update invoice")
+  void shouldCorrectUpdateInvoice() throws IOException {
+    // Given
+    String firstLine = InvoiceTestUtil.sampleInvoiceJson;
+    Invoice firstInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile();
+    doReturn(Collections.singletonList(firstLine)).when(fileHelper)
+        .readLines(Configuration.INVOICE_DATABASE_FILE);
+    doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
+    // When
+    boolean result = inFileDatabase.updateInvoice(1L, InvoiceTestUtil.sampleInvoice());
+    // Then
+    assertTrue(result);
+    verify(fileHelper).readLines(Configuration.INVOICE_DATABASE_FILE);
+    verify(invoiceJsonConverter).fromJson(firstLine);
+  }
+
+  @Test
+  @DisplayName("Should correct delete invoice")
+  void shouldCorrectDeleteInvoice() throws IOException {
+    // Given
+    String firstLine = InvoiceTestUtil.sampleInvoiceJson;
+    Invoice firstInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile();
+    doReturn(Collections.singletonList(firstLine)).when(fileHelper)
+        .readLines(Configuration.INVOICE_DATABASE_FILE);
+    doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
+    // When
+    boolean result = inFileDatabase.removeInvoiceById(1L);
+    // Then
+    assertTrue(result);
+    verify(fileHelper).readLines(Configuration.INVOICE_DATABASE_FILE);
+    verify(invoiceJsonConverter).fromJson(firstLine);
   }
 }

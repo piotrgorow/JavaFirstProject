@@ -26,7 +26,8 @@ class FileHelperTest {
   @DisplayName("Should throw an exception when the file is not find")
   void shouldThrowExceptionWhenFileNotFound() {
     FileHelper fileHelper = new FileHelper();
-    assertThrows(FileNotFoundException.class, () -> fileHelper.readLines("src/main/resources/test.txt"));
+    assertThrows(FileNotFoundException.class,
+        () -> fileHelper.readLines("src/main/resources/test.txt"));
   }
 
   @Test
@@ -64,5 +65,33 @@ class FileHelperTest {
 
     //Then
     assertArrayEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Should throw exception when parameter lines is null")
+  void shouldThrowExceptionWhenParameterLinesIsNull() {
+    FileHelper fileHelper = new FileHelper();
+    assertThrows(IllegalArgumentException.class, () -> fileHelper.writeLines(null, "", true));
+  }
+
+  @Test
+  @DisplayName("Should throw exception when parameter filePath is null")
+  void shouldThrowExceptionWhenParameterFilePathIsNull() {
+    FileHelper fileHelper = new FileHelper();
+    assertThrows(IllegalArgumentException.class,
+        () -> fileHelper.writeLines(new ArrayList<>(), null, true));
+  }
+
+  @Test
+  @DisplayName("Should return correct last line from file")
+  void shouldReturnCorrectLastLineFromFile() throws IOException {
+    // Given
+    FileHelper fileHelper = new FileHelper();
+    String path = "src/test/resources/input.txt";
+    String expected = "12345";
+    // When
+    String result = fileHelper.getLastLine(path);
+    // Then
+    assertEquals(expected, result);
   }
 }
