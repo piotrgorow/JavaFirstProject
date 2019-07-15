@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
+import pl.coderstrust.accounting.validator.InvoiceValidator;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.services.InvoiceService;
 
@@ -32,10 +33,13 @@ public class InvoiceController {
 
   private final InvoiceService invoiceService;
   private final InvoiceJsonConverter invoiceJsonConverter;
+  private final InvoiceValidator invoiceValidator;
 
-  InvoiceController(InvoiceService invoiceService, InvoiceJsonConverter invoiceJsonConverter) {
+  InvoiceController(InvoiceService invoiceService, InvoiceJsonConverter invoiceJsonConverter,
+      InvoiceValidator invoiceValidator) {
     this.invoiceService = invoiceService;
     this.invoiceJsonConverter = invoiceJsonConverter;
+    this.invoiceValidator = invoiceValidator;
   }
 
   @PostMapping
@@ -49,6 +53,9 @@ public class InvoiceController {
   public ResponseEntity<?> addInvoice(
       @ApiParam(value = "invoice", type = "Invoice", required = true)
       @RequestBody Invoice invoice) {
+    if (!invoiceValidator.validate(invoice).isEmpty()) {
+      return new ResponseEntity<>(invoiceValidator.validate(invoice), HttpStatus.BAD_REQUEST);
+    }
     try {
       log.info("Saving invoice with number {}", invoice.getInvoiceNumber());
       invoiceService.saveInvoice(invoice);
@@ -126,6 +133,10 @@ public class InvoiceController {
       if (!id.equals(invoice.getId())) {
         log.warn("Invalid ID provided");
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+      if (!invoiceValidator.validate(invoice).isEmpty()) {
+        log.warn("Invalid invoice passed - arguments validation");
+        return new ResponseEntity<>(invoiceValidator.validate(invoice), HttpStatus.BAD_REQUEST);
       }
       if (!invoiceService.updateInvoice(id, invoice)) {
         log.warn("Invoice with ID = {} does not exist", id);

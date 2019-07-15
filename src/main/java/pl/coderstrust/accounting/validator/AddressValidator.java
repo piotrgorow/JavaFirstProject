@@ -31,7 +31,7 @@ public class AddressValidator implements Validator<Address> {
     } else {
       if (Arrays.stream(Locale.getISOCountries())
           .noneMatch(s -> s.equals(address.getCountryCode()))) {
-        log.warn("Parameter countryCode must be in the IDO format");
+        log.warn("Parameter countryCode must be in the ISO format");
         result.add("Country must be in the ISO format");
       }
     }

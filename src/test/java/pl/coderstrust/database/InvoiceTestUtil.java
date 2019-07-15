@@ -33,7 +33,7 @@ public class InvoiceTestUtil {
       + "{\"description\":\"Oregano\",\"quantity\":254,\"value\":99.0,\"vatRate\":\"VAT_0\","
       + "\"vatValue\":0.00}]}";
 
-  static Invoice sampleInvoice() {
+  public static Invoice sampleInvoice() {
     Invoice invoice1 = new Invoice("inv1", LocalDate.parse("2019-01-01"),
         InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
     invoice1.addInvoiceEntry(1L, "Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
@@ -80,7 +80,7 @@ public class InvoiceTestUtil {
     return invoice2;
   }
 
-  public static Invoice sampleInvoiceFromFile3() {
+  static Invoice sampleInvoiceFromFile3() {
     Invoice invoice3 = new Invoice("inv3", LocalDate.parse("2019-03-01"),
         InvoiceTestUtil.sampleCompany3(), InvoiceTestUtil.sampleCompany1());
     invoice3.addInvoiceEntry(1L, "Papaya", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
@@ -90,16 +90,52 @@ public class InvoiceTestUtil {
     return invoice3;
   }
 
+  public static Invoice sampleInvoiceWIthNoInvoiceNumber() {
+    Invoice invoice1 = new Invoice("", LocalDate.parse("2019-01-01"),
+        InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
+    invoice1.addInvoiceEntry(1L, "Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
+    invoice1.addInvoiceEntry(2L, "Jablka", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
+    invoice1.addInvoiceEntry(3L, "Pomarancze", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);
+    return invoice1;
+  }
+
+  public static Invoice sampleInvoiceWIthNoSeller() {
+    Invoice invoice1 = new Invoice("123", LocalDate.parse("2019-01-01"),
+        null, InvoiceTestUtil.sampleCompany2());
+    invoice1.addInvoiceEntry(1L, "Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
+    invoice1.addInvoiceEntry(2L, "Jablka", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
+    invoice1.addInvoiceEntry(3L, "Pomarancze", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);
+    return invoice1;
+  }
+
+  public static Invoice sampleInvoiceWIthNoBuyer() {
+    Invoice invoice1 = new Invoice("456", LocalDate.parse("2019-01-01"),
+        InvoiceTestUtil.sampleCompany1(), null);
+    invoice1.addInvoiceEntry(1L, "Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
+    invoice1.addInvoiceEntry(2L, "Jablka", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
+    invoice1.addInvoiceEntry(3L, "Pomarancze", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);
+    return invoice1;
+  }
+
+  public static Invoice sampleInvoiceWIthNoDate() {
+    Invoice invoice1 = new Invoice("123", null,
+        InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
+    invoice1.addInvoiceEntry(1L, "Kiwi", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
+    invoice1.addInvoiceEntry(2L, "Jablka", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
+    invoice1.addInvoiceEntry(3L, "Pomarancze", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);
+    return invoice1;
+  }
+
   private static Company sampleCompany1() {
-    return new Company(1L, "XYZ", "11111", sampleAddress1());
+    return new Company(1L, "XYZ", "123-456-78-90", sampleAddress1());
   }
 
   private static Company sampleCompany2() {
-    return new Company(1L, "QAZ", "22222", sampleAddress1());
+    return new Company(2L, "QAZ", "098-765-43-21", sampleAddress1());
   }
 
   private static Company sampleCompany3() {
-    return new Company(1L, "PKL", "33333", sampleAddress2());
+    return new Company(1L, "PKL", "102-938-47-56", sampleAddress2());
   }
 
   public static Address sampleAddress1() {

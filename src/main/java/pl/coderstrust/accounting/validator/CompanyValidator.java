@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import pl.coderstrust.accounting.Utils;
+import pl.coderstrust.model.Address;
 import pl.coderstrust.model.Company;
 
 @Slf4j
 public class CompanyValidator implements Validator<Company> {
 
+  private Validator<Address> addressValidator = new AddressValidator();
   private static final Pattern TAX_ID_PATTERN = Pattern.compile("\\d{3}-\\d{3}-\\d{2}-\\d{2}");
 
   @Override
@@ -28,6 +30,11 @@ public class CompanyValidator implements Validator<Company> {
         log.warn("Parameter taxIdentificationNumber must be in the format XXX-XXX-XX-XX");
         result.add("Company tax ID must be in the format XXX-XXX-XX-XX");
       }
+    }
+    if (company.getAddress() == null) {
+      result.add("Company address must not be null");
+    } else {
+      result.addAll(addressValidator.validate(company.getAddress()));
     }
     return result;
   }

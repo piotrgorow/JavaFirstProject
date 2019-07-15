@@ -23,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
+import pl.coderstrust.accounting.validator.InvoiceValidator;
 import pl.coderstrust.database.InvoiceTestUtil;
 import pl.coderstrust.model.Invoice;
 import pl.coderstrust.services.InvoiceService;
@@ -31,6 +32,7 @@ import pl.coderstrust.services.InvoiceService;
 class InvoiceControllerTest {
 
   private final InvoiceJsonConverter invoiceJsonConverter = new InvoiceJsonConverter();
+  private final InvoiceValidator invoiceValidator = new InvoiceValidator();
   private MockMvc mvc;
 
   @MockBean
@@ -38,7 +40,8 @@ class InvoiceControllerTest {
 
   @BeforeEach
   void setup() {
-    mvc = MockMvcBuilders.standaloneSetup(new InvoiceController(invoiceService, invoiceJsonConverter)).build();
+    mvc = MockMvcBuilders.standaloneSetup(new InvoiceController(invoiceService, invoiceJsonConverter,
+        invoiceValidator)).build();
   }
 
   @Test
