@@ -1,10 +1,15 @@
 package pl.coderstrust.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
+@ApiModel(value = "Company", description = "Company")
 public class Company {
 
+  @ApiModelProperty(value = "Name of customer", example = "ABC Company", dataType = "String")
   private String name;
+  @ApiModelProperty(value = "Tax identification number", example = "123-456-78-90", dataType = "String")
   private String taxIdentificationNumber;
   private Address address;
 

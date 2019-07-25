@@ -1,14 +1,22 @@
 package pl.coderstrust.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@ApiModel(value = "InvoiceEntry", description = "InvoiceEntry")
 public class InvoiceEntry {
 
+  @ApiModelProperty(value = "Description", example = "Apple", dataType = "String")
   private String description;
+  @ApiModelProperty(value = "Quantity", example = "2", dataType = "int")
   private int quantity;
+  @ApiModelProperty(value = "Value", example = "10.25", dataType = "BigDecimal")
   private BigDecimal value;
+  @ApiModelProperty(value = "Tax", example = "VAT_23", dataType = "Vat")
   private Vat vatRate;
+  @ApiModelProperty(value = "Value of tax", example = "2.36", dataType = "BigDecimal")
   private BigDecimal vatValue;
 
   private InvoiceEntry() {

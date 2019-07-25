@@ -1,12 +1,19 @@
 package pl.coderstrust.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
+@ApiModel(value = "Address", description = "Address")
 public class Address {
 
+  @ApiModelProperty(value = "Street address", example = "Baker Street 1/2", dataType = "String")
   private String streetAddress;
+  @ApiModelProperty(value = "Postal code", example = "12-345", dataType = "String")
   private String postalCode;
+  @ApiModelProperty(value = "City", example = "London", dataType = "String")
   private String city;
+  @ApiModelProperty(value = "Country code", example = "UK", dataType = "String")
   private String countryCode;
 
   private Address() {

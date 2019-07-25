@@ -1,15 +1,21 @@
 package pl.coderstrust.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@ApiModel(value = "Invoice", description = "Invoice")
 public class Invoice {
 
+  @ApiModelProperty(value = "identifier of invoice", example = "1", dataType = "Long")
   private Long id;
+  @ApiModelProperty(value = "Invoice number", example = "INV 1/01/2019", dataType = "String")
   private String invoiceNumber;
+  @ApiModelProperty(value = "Date of invoice", example = "2019-01-01", dataType = "LocalDate")
   private LocalDate date;
   private Company seller;
   private Company buyer;
