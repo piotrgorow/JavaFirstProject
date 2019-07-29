@@ -6,13 +6,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.io.input.ReversedLinesFileReader;
-import pl.coderstrust.configuration.InvoiceConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
-public class FileHelper {
+@Component
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "in-file")
+class FileHelper {
 
   List<String> readLines(String filePath) throws IOException {
     if (filePath == null) {
@@ -48,16 +52,16 @@ public class FileHelper {
     }
   }
 
-  void checkFilesExistence() throws IOException {
-    File invoiceFile = new File(InvoiceConfig.INVOICE_DATABASE_FILE);
+  void checkFilesExistence(String filePath) throws IOException {
+    File invoiceFile = new File(filePath);
     if (!invoiceFile.exists()) {
-      PrintWriter printWriter = new PrintWriter(InvoiceConfig.INVOICE_DATABASE_FILE);
+      PrintWriter printWriter = new PrintWriter(filePath);
     }
   }
 
   String getLastLine(String path) throws IOException {
     File file = new File(path);
-    ReversedLinesFileReader reversedLinesFileReader = new ReversedLinesFileReader(file);
+    ReversedLinesFileReader reversedLinesFileReader = new ReversedLinesFileReader(file, Charset.defaultCharset());
     return reversedLinesFileReader.readLine();
   }
 }

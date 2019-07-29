@@ -6,24 +6,33 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
-import pl.coderstrust.configuration.InvoiceConfig;
+import pl.coderstrust.configuration.InFileDatabaseProperties;
 import pl.coderstrust.model.Invoice;
 
+@Repository
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "in-file")
 public class InFileDatabase implements Database {
 
   private final Map<Long, Invoice> invoices;
   private final FileHelper fileHelper;
   private final InvoiceJsonConverter invoiceJsonConverter;
   private final List<String> invoiceToSave = new ArrayList<>();
+  private final InFileDatabaseProperties properties;
   private Long databaseId;
 
-  public InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter) throws IOException {
+  @Autowired
+  InFileDatabase(FileHelper fileHelper, InvoiceJsonConverter invoiceJsonConverter,
+      InFileDatabaseProperties properties) throws IOException {
     this.fileHelper = fileHelper;
     this.invoiceJsonConverter = invoiceJsonConverter;
+    this.properties = properties;
     invoices = new HashMap<>();
-    fileHelper.checkFilesExistence();
-    String lastLine = fileHelper.getLastLine(InvoiceConfig.INVOICE_DATABASE_FILE);
+    fileHelper.checkFilesExistence(properties.getFilePath());
+    String lastLine = fileHelper.getLastLine(properties.getFilePath());
     if (lastLine.equals("")) {
       databaseId = 0L;
     } else {
@@ -39,7 +48,7 @@ public class InFileDatabase implements Database {
     invoiceToSave.clear();
     invoice.setId(databaseId + 1);
     invoiceToSave.add(invoiceJsonConverter.toJson(invoice));
-    fileHelper.writeLines(invoiceToSave, InvoiceConfig.INVOICE_DATABASE_FILE, true);
+    fileHelper.writeLines(invoiceToSave, properties.getFilePath(), true);
     databaseId = invoice.getId();
   }
 
@@ -90,7 +99,7 @@ public class InFileDatabase implements Database {
 
   private void loadHashMap() throws IOException {
     invoices.clear();
-    List<String> invoicesFromFile = fileHelper.readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    List<String> invoicesFromFile = fileHelper.readLines(properties.getFilePath());
     Invoice jsonInvoice;
     for (String inv : invoicesFromFile) {
       jsonInvoice = invoiceJsonConverter.fromJson(inv);
@@ -103,6 +112,6 @@ public class InFileDatabase implements Database {
     for (Invoice inv : invoices.values()) {
       invoiceToSave.add(invoiceJsonConverter.toJson(inv));
     }
-    fileHelper.writeLines(invoiceToSave, InvoiceConfig.INVOICE_DATABASE_FILE, false);
+    fileHelper.writeLines(invoiceToSave, properties.getFilePath(), false);
   }
 }

@@ -2,14 +2,18 @@ package pl.coderstrust.database;
 
 import java.util.Collection;
 import java.util.HashMap;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 import pl.coderstrust.model.Invoice;
 
+@Repository
+@ConditionalOnProperty(name = "pl.coderstrust.database", havingValue = "in-memory")
 public class InMemoryDatabase implements Database {
 
   private final HashMap<Long, Invoice> invoices;
   private Long databaseId = 1L;
 
-  public InMemoryDatabase() {
+  InMemoryDatabase() {
     invoices = new HashMap<>();
   }
 

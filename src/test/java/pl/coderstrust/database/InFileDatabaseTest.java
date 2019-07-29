@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
-import pl.coderstrust.configuration.InvoiceConfig;
+import pl.coderstrust.configuration.InFileDatabaseProperties;
 import pl.coderstrust.model.Invoice;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,11 +35,15 @@ class InFileDatabaseTest {
   InvoiceJsonConverter invoiceJsonConverter;
   private InFileDatabase inFileDatabase;
 
+  private InFileDatabaseProperties properties;
+
   @BeforeEach
   void setup() throws IOException {
-    doReturn("").when(fileHelper).getLastLine(InvoiceConfig.INVOICE_DATABASE_FILE);
-    doNothing().when(fileHelper).checkFilesExistence();
-    inFileDatabase = new InFileDatabase(fileHelper, invoiceJsonConverter);
+    properties = new InFileDatabaseProperties();
+    properties.setFilePath("src/test/resources/file.txt");
+    doReturn("").when(fileHelper).getLastLine(properties.getFilePath());
+    doNothing().when(fileHelper).checkFilesExistence((properties.getFilePath()));
+    inFileDatabase = new InFileDatabase(fileHelper, invoiceJsonConverter, properties);
   }
 
   @Test
@@ -62,8 +66,8 @@ class InFileDatabaseTest {
 
     // Then
     verify(invoiceJsonConverter).toJson(invoiceToSave);
-    verify(fileHelper).getLastLine(InvoiceConfig.INVOICE_DATABASE_FILE);
-    verify(fileHelper).checkFilesExistence();
+    verify(fileHelper).getLastLine(properties.getFilePath());
+    verify(fileHelper).checkFilesExistence(properties.getFilePath());
   }
 
   @Test
@@ -83,7 +87,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-        .readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+        .readLines(properties.getFilePath());
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);
@@ -94,7 +98,7 @@ class InFileDatabaseTest {
 
     // Then
     assertEquals(expected, result);
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
     verify(invoiceJsonConverter).fromJson(firstLine);
     verify(invoiceJsonConverter).fromJson(secondLine);
     verify(invoiceJsonConverter).fromJson(thirdLine);
@@ -111,7 +115,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-        .readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+        .readLines(properties.getFilePath());
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);
@@ -121,7 +125,7 @@ class InFileDatabaseTest {
 
     // Then
     assertNull(result);
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
     verify(invoiceJsonConverter).fromJson(firstLine);
     verify(invoiceJsonConverter).fromJson(secondLine);
     verify(invoiceJsonConverter).fromJson(thirdLine);
@@ -138,7 +142,7 @@ class InFileDatabaseTest {
     Invoice secondInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile2();
     Invoice thirdInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile3();
     doReturn(Arrays.asList(firstLine, secondLine, thirdLine)).when(fileHelper)
-        .readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+        .readLines(properties.getFilePath());
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     doReturn(secondInvoiceFromFile).when(invoiceJsonConverter).fromJson(secondLine);
     doReturn(thirdInvoiceFromFile).when(invoiceJsonConverter).fromJson(thirdLine);
@@ -155,7 +159,7 @@ class InFileDatabaseTest {
     for (Invoice invoice : result) {
       assertTrue(expected.contains(invoice));
     }
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
     verify(invoiceJsonConverter).fromJson(firstLine);
     verify(invoiceJsonConverter).fromJson(secondLine);
     verify(invoiceJsonConverter).fromJson(thirdLine);
@@ -165,14 +169,14 @@ class InFileDatabaseTest {
   @DisplayName("Should return empty collection for no invoices in file")
   void shouldReturnEmptyCollectionForNoInvoiceInFile() throws IOException {
     // Given
-    doReturn(new ArrayList<>()).when(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    doReturn(new ArrayList<>()).when(fileHelper).readLines(properties.getFilePath());
 
     // When
     Collection<Invoice> result = inFileDatabase.getInvoices();
 
     // Then
     assertTrue(result.isEmpty());
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
   }
 
   @Test
@@ -188,13 +192,13 @@ class InFileDatabaseTest {
     String firstLine = InvoiceTestUtil.sampleInvoiceJson;
     Invoice firstInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile();
     doReturn(Collections.singletonList(firstLine)).when(fileHelper)
-        .readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+        .readLines(properties.getFilePath());
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     // When
     boolean result = inFileDatabase.updateInvoice(1L, InvoiceTestUtil.sampleInvoice());
     // Then
     assertTrue(result);
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
     verify(invoiceJsonConverter).fromJson(firstLine);
   }
 
@@ -205,13 +209,13 @@ class InFileDatabaseTest {
     String firstLine = InvoiceTestUtil.sampleInvoiceJson;
     Invoice firstInvoiceFromFile = InvoiceTestUtil.sampleInvoiceFromFile();
     doReturn(Collections.singletonList(firstLine)).when(fileHelper)
-        .readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+        .readLines(properties.getFilePath());
     doReturn(firstInvoiceFromFile).when(invoiceJsonConverter).fromJson(firstLine);
     // When
     boolean result = inFileDatabase.removeInvoiceById(1L);
     // Then
     assertTrue(result);
-    verify(fileHelper).readLines(InvoiceConfig.INVOICE_DATABASE_FILE);
+    verify(fileHelper).readLines(properties.getFilePath());
     verify(invoiceJsonConverter).fromJson(firstLine);
   }
 }
