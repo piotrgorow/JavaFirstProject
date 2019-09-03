@@ -15,7 +15,7 @@ class AddressValidatorTest {
   @Test
   @DisplayName("Should validate correct Address")
   void shouldValidateCorrectAddress() {
-    Address address = new Address("ul. Jakakolwiek 34/5A", "31-021", "Kraków", "PL");
+    Address address = new Address(1L, "ul. Jakakolwiek 34/5A", "31-021", "Kraków", "PL");
     List<String> result = validator.validate(address);
     assertTrue(result.isEmpty());
   }
@@ -23,7 +23,7 @@ class AddressValidatorTest {
   @Test
   @DisplayName("Should validate address with all nulls")
   void shouldValidateAddressWithAllNulls() {
-    Address address = new Address(null, null, null, null);
+    Address address = new Address(null, null, null, null, null);
     List<String> result = validator.validate(address);
     assertEquals(4, result.size());
     result.forEach(message -> assertTrue(message.contains("null")));
@@ -32,7 +32,7 @@ class AddressValidatorTest {
   @Test
   @DisplayName("Should validate address with all empty parameters")
   void shouldValidateAddressWithAllEmptyStrings() {
-    Address address = new Address("", "", "", "");
+    Address address = new Address(1L, "", "", "", "");
     List<String> result = validator.validate(address);
     assertEquals(4, result.size());
     result.forEach(message -> assertTrue(message.contains("empty")));
@@ -41,7 +41,7 @@ class AddressValidatorTest {
   @Test
   @DisplayName("Should validate incorrect country code")
   void shouldValidateIncorrectCountryCode() {
-    Address address = new Address("ul. Jakakolwiek 34/5A", "31-021", "Kraków", "Poland");
+    Address address = new Address(1L, "ul. Jakakolwiek 34/5A", "31-021", "Kraków", "Poland");
     List<String> result = validator.validate(address);
     assertEquals(1, result.size());
     assertTrue(result.get(0).toLowerCase().contains("country"));
@@ -50,7 +50,7 @@ class AddressValidatorTest {
   @Test
   @DisplayName("Should validate incorrect postal code")
   void shouldValidateIncorrectPostalCode() {
-    Address address = new Address("ul. Jakakolwiek 34/5A", "31021", "Kraków", "DE");
+    Address address = new Address(1L, "ul. Jakakolwiek 34/5A", "31021", "Kraków", "DE");
     List<String> result = validator.validate(address);
     assertEquals(1, result.size());
     assertTrue(result.get(0).toLowerCase().contains("postal code"));

@@ -7,18 +7,44 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @ApiModel(value = "Invoice", description = "Invoice")
+@Entity
+@Table(name = "invoice")
 public class Invoice {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq_generator")
+  @SequenceGenerator(name = "invoice_seq_generator", sequenceName = "invoice_seq")
   @ApiModelProperty(value = "identifier of invoice", example = "1", dataType = "Long")
+  @Column(name = "invoice_id")
   private Long id;
   @ApiModelProperty(value = "Invoice number", example = "INV 1/01/2019", dataType = "String")
+  @Column(name = "invoice_number")
   private String invoiceNumber;
   @ApiModelProperty(value = "Date of invoice", example = "2019-01-01", dataType = "LocalDate")
+  @Column(name = "invoice_date")
   private LocalDate date;
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "invoice_seller_id")
   private Company seller;
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "invoice_buyer_id")
   private Company buyer;
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "invoice_id")
+  @Column(name = "invoice_entries")
   private List<InvoiceEntry> invoiceEntries;
 
   private Invoice() {
@@ -52,8 +78,8 @@ public class Invoice {
     return invoiceEntries;
   }
 
-  public void addInvoiceEntry(String description, int quantity, BigDecimal value, Vat vatRate) {
-    invoiceEntries.add(new InvoiceEntry(description, quantity, value, vatRate));
+  public void addInvoiceEntry(Long invoiceEntryId, String description, int quantity, BigDecimal value, Vat vatRate) {
+    invoiceEntries.add(new InvoiceEntry(invoiceEntryId, description, quantity, value, vatRate));
   }
 
   public Long getId() {
@@ -83,7 +109,6 @@ public class Invoice {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, invoiceNumber, date, seller, buyer,
-        invoiceEntries);
+    return Objects.hash(id, invoiceNumber, date, seller, buyer, invoiceEntries);
   }
 }

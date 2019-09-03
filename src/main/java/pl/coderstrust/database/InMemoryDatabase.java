@@ -13,7 +13,7 @@ public class InMemoryDatabase implements Database {
   private final HashMap<Long, Invoice> invoices;
   private Long databaseId = 1L;
 
-  InMemoryDatabase() {
+  public InMemoryDatabase() {
     invoices = new HashMap<>();
   }
 

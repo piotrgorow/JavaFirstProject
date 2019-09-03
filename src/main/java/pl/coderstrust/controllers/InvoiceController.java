@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiResponses;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,6 @@ public class InvoiceController {
   private final InvoiceService invoiceService;
   private final InvoiceJsonConverter invoiceJsonConverter;
 
-  @Autowired
   InvoiceController(InvoiceService invoiceService, InvoiceJsonConverter invoiceJsonConverter) {
     this.invoiceService = invoiceService;
     this.invoiceJsonConverter = invoiceJsonConverter;

@@ -2,7 +2,6 @@ package pl.coderstrust.services;
 
 import java.io.IOException;
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.coderstrust.database.Database;
 import pl.coderstrust.model.Invoice;
@@ -12,7 +11,6 @@ public class InvoiceService {
 
   private Database database;
 
-  @Autowired
   public InvoiceService(Database database) {
     this.database = database;
   }

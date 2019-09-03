@@ -22,7 +22,7 @@ class InvoiceEntryValidatorTest {
   @DisplayName("Should validate correct invoice entry")
   void shouldValidateCorrectInvoiceEntry() {
     // When
-    InvoiceEntry invoiceEntry = new InvoiceEntry("Sok", 10, BigDecimal.valueOf(10.50), Vat.VAT_23);
+    InvoiceEntry invoiceEntry = new InvoiceEntry(1L, "Sok", 10, BigDecimal.valueOf(10.50), Vat.VAT_23);
     List<String> result = InvoiceEntryValidatorTest.validator.validate(invoiceEntry);
 
     // Then
@@ -33,7 +33,7 @@ class InvoiceEntryValidatorTest {
   @DisplayName("Should validate invoice entry with null description")
   void shouldValidateInvoiceEntryWithNullDescription() {
     // When
-    InvoiceEntry invoiceEntry = new InvoiceEntry(null, 10, BigDecimal.valueOf(50.00), Vat.VAT_23);
+    InvoiceEntry invoiceEntry = new InvoiceEntry(1L, null, 10, BigDecimal.valueOf(50.00), Vat.VAT_23);
     String expected = "Invoice entry description must not be null or empty";
     List<String> result = InvoiceEntryValidatorTest.validator.validate(invoiceEntry);
 
@@ -45,7 +45,7 @@ class InvoiceEntryValidatorTest {
   @DisplayName("Should validate invoice entry with empty description")
   void shouldValidateInvoiceEntryWithEmptyDescription() {
     // When
-    InvoiceEntry invoiceEntry = new InvoiceEntry("", 10, BigDecimal.valueOf(50.00), Vat.VAT_23);
+    InvoiceEntry invoiceEntry = new InvoiceEntry(1L, "", 10, BigDecimal.valueOf(50.00), Vat.VAT_23);
     String expected = "Invoice entry description must not be null or empty";
     List<String> result = InvoiceEntryValidatorTest.validator.validate(invoiceEntry);
 
@@ -79,17 +79,17 @@ class InvoiceEntryValidatorTest {
 
   private static Stream<Arguments> invoiceEntryArgumentsQuantity() {
     return Stream.of(
-        Arguments.of(new InvoiceEntry("Sok", 0, BigDecimal.valueOf(25.55), Vat.VAT_23)),
-        Arguments.of(new InvoiceEntry("Sok", -10, BigDecimal.valueOf(25.55), Vat.VAT_23)),
-        Arguments.of(new InvoiceEntry("Sok", -100, BigDecimal.valueOf(25.55), Vat.VAT_23))
+        Arguments.of(new InvoiceEntry(1L, "Sok", 0, BigDecimal.valueOf(25.55), Vat.VAT_23)),
+        Arguments.of(new InvoiceEntry(1L, "Sok", -10, BigDecimal.valueOf(25.55), Vat.VAT_23)),
+        Arguments.of(new InvoiceEntry(1L, "Sok", -100, BigDecimal.valueOf(25.55), Vat.VAT_23))
     );
   }
 
   private static Stream<Arguments> invoiceEntryArgumentsValue() {
     return Stream.of(
-        Arguments.of(new InvoiceEntry("Sok", 10, BigDecimal.valueOf(-1.0), Vat.VAT_23)),
-        Arguments.of(new InvoiceEntry("Sok", 10, BigDecimal.valueOf(-20.09), Vat.VAT_23)),
-        Arguments.of(new InvoiceEntry("Sok", 10, BigDecimal.valueOf(-100.56), Vat.VAT_23))
+        Arguments.of(new InvoiceEntry(1L, "Sok", 10, BigDecimal.valueOf(-1.0), Vat.VAT_23)),
+        Arguments.of(new InvoiceEntry(1L, "Sok", 10, BigDecimal.valueOf(-20.09), Vat.VAT_23)),
+        Arguments.of(new InvoiceEntry(1L, "Sok", 10, BigDecimal.valueOf(-100.56), Vat.VAT_23))
     );
   }
 }

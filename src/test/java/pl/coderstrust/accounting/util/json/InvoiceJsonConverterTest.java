@@ -35,54 +35,54 @@ class InvoiceJsonConverterTest {
   private static Stream<Arguments> invoicesParameters() {
     return Stream.of(
         Arguments.of(new Invoice("1", LocalDate.of(2019, 6, 14),
-                new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
-            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":"
+                new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+                new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
+            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"companyId\":1,\"name\":"
                 + "\"Seller\",\"taxIdentificationNumber\":\"VAT_23\","
-                + "\"address\":{\"streetAddress\":"
+                + "\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
-                + "\"countryCode\":\"PL\"}},\"buyer\":{\"name\":\"Buyer\",\"taxIdentificationNumber"
-                + "\":\"VAT_23\",\"address\":{\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":"
+                + "\"countryCode\":\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber"
+                + "\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":"
                 + "\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
                 + "\"invoiceEntries\":[]}"),
         Arguments.of(new Invoice(null, LocalDate.of(2019, 6, 14),
-                new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
-            "{\"id\":null,\"invoiceNumber\":null,\"date\":\"2019-06-14\",\"seller\":{\"name\":"
+                new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+                new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
+            "{\"id\":null,\"invoiceNumber\":null,\"date\":\"2019-06-14\",\"seller\":{\"companyId\":1,\"name\":"
                 + "\"Seller\",\"taxIdentificationNumber\":\"VAT_23\","
-                + "\"address\":{\"streetAddress\":"
+                + "\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
-                + "\"countryCode\":\"PL\"}},\"buyer\":{\"name\":\"Buyer\","
-                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+                + "\"countryCode\":\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\","
+                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\","
                 + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
                 + "\"invoiceEntries\":[]}"),
         Arguments.of(new Invoice("1", null,
-                new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
-            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":null,\"seller\":{\"name\":\"Seller\","
-                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+                new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+                new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
+            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":null,\"seller\":{\"companyId\":1,\"name\":\"Seller\","
+                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\","
-                + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"buyer\":{\"name\":\"Buyer\","
-                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+                + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\","
+                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\","
                 + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
                 + "\"invoiceEntries\":[]}"),
         Arguments.of(new Invoice("1", LocalDate.of(2019, 6, 14),
                 null,
-                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
+                new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1())),
             "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":null,"
-                + "\"buyer\":{\"name\":\"Buyer\","
-                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+                + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\","
+                + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\","
                 + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
                 + "\"invoiceEntries\":[]}"),
         Arguments.of(new Invoice("1", LocalDate.of(2019, 6, 14),
-                new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+                new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
                 null),
-            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":"
+            "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"companyId\":1,\"name\":"
                 + "\"Seller\",\"taxIdentificationNumber\":\"VAT_23\","
-                + "\"address\":{\"streetAddress\":"
+                + "\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\","
                 + "\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"buyer\":null,"
                 + "\"invoiceEntries\":[]}")
@@ -94,21 +94,21 @@ class InvoiceJsonConverterTest {
   void shouldReturnProperJasonStringWhenInvoiceElementsWasAdded() throws IOException {
     // Given
     Invoice invoice = new Invoice("1", LocalDate.of(2019, 6, 14),
-        new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-        new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
-    invoice.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
-    invoice.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
-    invoice.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
+        new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+        new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
+    invoice.addInvoiceEntry(1L, "Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
+    invoice.addInvoiceEntry(2L, "Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
+    invoice.addInvoiceEntry(3L, "Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
     String expected = "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
-        + "\"seller\":{\"name\":\"Seller\","
-        + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":\"Korkowa 2/12\","
+        + "\"seller\":{\"companyId\":1,\"name\":\"Seller\","
+        + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\","
         + "\"postalCode\":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
-        + "\"buyer\":{\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
-        + "\"address\":{\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":\"00-123\""
+        + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
+        + "\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":\"00-123\""
         + ",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"invoiceEntries\":"
-        + "[{\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
-        + "\"vatValue\":2.392},{\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
-        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"description\":\"Sól\",\"quantity\":3,"
+        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
+        + "\"vatValue\":2.392},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
+        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
         + "\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
 
     // When
@@ -141,52 +141,48 @@ class InvoiceJsonConverterTest {
 
   private static Stream<Arguments> jasonParameters() {
     return Stream.of(
-        Arguments.of("{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"name\":"
-            + "\"Seller\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
-            + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
-            + "\"countryCode\":\"PL\"}},\"buyer\":{\"name\":\"Buyer\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+        Arguments.of("{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":{\"companyId\":1,"
+            + "\"name\":\"Seller\",\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,"
+            + "\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
+            + "\"countryCode\":\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\","
+            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
             + "\"Korkowa 2/12\",\"postalCode\":"
             + "\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
             + "\"invoiceEntries\":[]}", new Invoice("1", LocalDate.of(2019, 6, 14),
-            new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-            new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
-        Arguments.of("{\"invoiceNumber\":null,\"date\":\"2019-06-14\",\"seller\":{\"name\":"
-            + "\"Seller\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+            new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+            new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
+        Arguments.of("{\"id\":null,\"invoiceNumber\":null,\"date\":\"2019-06-14\",\"seller\":{\"companyId\":1,\"name\":"
+            + "\"Seller\",\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
             + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
-            + "\"countryCode\":\"PL\"}},\"buyer\":{\"name\":\"Buyer\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
-            + "\"Korkowa 2/12\",\"postalCode\":"
-            + "\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
+            + "\"countryCode\":\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\","
+            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":"
+            + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
             + "\"invoiceEntries\":[]}", new Invoice(null, LocalDate.of(2019, 6, 14),
-            new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-            new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
-        Arguments.of("{\"invoiceNumber\":\"1\",\"date\":null,\"seller\":{\"name\":\"Seller\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
-            + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":"
-            + "\"PL\"}},\"buyer\":{\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
-            + "\"address\":{\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":"
+            new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+            new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
+        Arguments.of("{\"id\":null,\"invoiceNumber\":\"1\",\"date\":null,\"seller\":{\"companyId\":1,"
+            + "\"name\":\"Seller\",\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,"
+            + "\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":"
+            + "\"PL\"}},\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
+            + "\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":"
             + "\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
             + "\"invoiceEntries\":[]}", new Invoice("1", null,
-            new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-            new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
-        Arguments.of("{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":null,"
-                + "\"buyer\":{\"name\":"
-                + "\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
-                + "\"address\":{\"streetAddress\":"
+            new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+            new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
+        Arguments.of("{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\",\"seller\":null,"
+                + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
+                + "\"address\":{\"addressId\":1,\"streetAddress\":"
                 + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
                 + "\"countryCode\":\"PL\"}},\"invoiceEntries\":[]}",
             new Invoice("1", LocalDate.of(2019, 6, 14), null,
-                new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
-        Arguments.of("{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
-            + "\"seller\":{\"name\":\"Seller\","
-            + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":"
+                new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()))),
+        Arguments.of("{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
+            + "\"seller\":{\"companyId\":1,\"name\":\"Seller\",\"taxIdentificationNumber\":\"VAT_23\","
+            + "\"address\":{\"addressId\":1,\"streetAddress\":"
             + "\"Korkowa 2/12\",\"postalCode\":\"00-123\",\"city\":\"Warszawa\","
             + "\"countryCode\":\"PL\"}},\"buyer\":null,"
             + "\"invoiceEntries\":[]}", new Invoice("1", LocalDate.of(2019, 6, 14),
-            new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+            new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
             null))
     );
   }
@@ -195,23 +191,23 @@ class InvoiceJsonConverterTest {
   @DisplayName("Should return proper invoice object when invoice elements was added")
   void shouldReturnProperInvoiceObjectWhenInvoiceElementsWasAdded() throws IOException {
     // Given
-    String given = "{\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
-        + "\"seller\":{\"name\":\"Seller\","
-        + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"streetAddress\":\"Korkowa 2/12\","
+    String given = "{\"id\":null,\"invoiceNumber\":\"1\",\"date\":\"2019-06-14\","
+        + "\"seller\":{\"companyId\":1,\"name\":\"Seller\","
+        + "\"taxIdentificationNumber\":\"VAT_23\",\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\","
         + "\"postalCode\":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},"
-        + "\"buyer\":{\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
-        + "\"address\":{\"streetAddress\":\"Korkowa 2/12\",\"postalCode\""
+        + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
+        + "\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\""
         + ":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"invoiceEntries\":"
-        + "[{\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
-        + "\"vatValue\":2.392},{\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
-        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"description\":\"Sól\",\"quantity\":3,"
+        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
+        + "\"vatValue\":2.392},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
+        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
         + "\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
     Invoice expected = new Invoice("1", LocalDate.of(2019, 6, 14),
-        new Company("Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
-        new Company("Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
-    expected.addInvoiceEntry("Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
-    expected.addInvoiceEntry("Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
-    expected.addInvoiceEntry("Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
+        new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
+        new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));
+    expected.addInvoiceEntry(1L, "Mąka", 1, BigDecimal.valueOf(10.4), Vat.VAT_23);
+    expected.addInvoiceEntry(2L, "Cukier", 2, BigDecimal.valueOf(3.5), Vat.VAT_23);
+    expected.addInvoiceEntry(3L, "Sól", 3, BigDecimal.valueOf(5.64), Vat.VAT_23);
 
     // When
     InvoiceJsonConverter invoiceJsonConverter = new InvoiceJsonConverter();
