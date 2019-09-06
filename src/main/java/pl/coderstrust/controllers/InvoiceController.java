@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponses;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import pl.coderstrust.services.InvoiceService;
 @RestController
 @RequestMapping("/invoices")
 @Api(tags = "Invoices")
+@Slf4j
 public class InvoiceController {
 
   private final InvoiceService invoiceService;
@@ -48,11 +50,14 @@ public class InvoiceController {
       @ApiParam(value = "invoice", type = "Invoice", required = true)
       @RequestBody Invoice invoice) {
     try {
+      log.info("Saving invoice with number {}", invoice.getInvoiceNumber());
       invoiceService.saveInvoice(invoice);
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.setLocation(URI.create(String.format("/invoices/%d", invoice.getId())));
+      log.info("Invoice was added with ID = {}", invoice.getId());
       return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     } catch (Exception e) {
+      log.error("An error occurred while adding the invoice", e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -65,12 +70,16 @@ public class InvoiceController {
       @ApiResponse(code = 500, message = "Failure")})
   public ResponseEntity<?> getInvoices() {
     try {
+      log.info("Reading all invoices");
       Collection<Invoice> invoices = invoiceService.getInvoices();
       if (invoices == null) {
+        log.info("No invoices in the database");
         return new ResponseEntity<>(new ArrayList<Invoice>(), HttpStatus.OK);
       }
+      log.info("The invoice list has been read");
       return new ResponseEntity<>(invoiceJsonConverter.toJsonAsList(invoices), HttpStatus.OK);
     } catch (Exception e) {
+      log.error("An error occurred while reading invoices", e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -86,12 +95,16 @@ public class InvoiceController {
       @ApiParam(value = "identifier", example = "1", type = "Long", required = true)
       @PathVariable("id") Long id) {
     try {
+      log.info("Reading invoice with ID = {}", id);
       Invoice invoice = invoiceService.getInvoiceById(id);
       if (invoice == null) {
+        log.warn("Invoice with ID = {} does not exist", id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
+      log.info("Retrieved invoice with ID = {}", id);
       return new ResponseEntity<>(invoiceJsonConverter.toJson(invoice), HttpStatus.OK);
     } catch (Exception e) {
+      log.error("An error occurred while reading the invoice", e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -109,14 +122,19 @@ public class InvoiceController {
       @ApiParam(value = "identifier", example = "1", type = "Long", required = true)
       @PathVariable("id") Long id, @RequestBody Invoice invoice) {
     try {
+      log.info("Updating Invoice with ID = {}", id);
       if (!id.equals(invoice.getId())) {
+        log.warn("Invalid ID provided");
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       if (!invoiceService.updateInvoice(id, invoice)) {
+        log.warn("Invoice with ID = {} does not exist", id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
+      log.info("The invoice with ID = {} was updated", id);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
+      log.error("An error occurred while updating the invoice", e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -132,11 +150,15 @@ public class InvoiceController {
       @ApiParam(value = "identifier", example = "1", type = "Long", required = true)
       @PathVariable("id") Long id) {
     try {
+      log.info("Deleting Invoice with ID = {}", id);
       if (!invoiceService.removeInvoiceById(id)) {
+        log.warn("Invoice with ID = {} does not exist", id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
+      log.info("The invoice with ID = {} was deleted", id);
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (Exception e) {
+      log.error("An error occurred while deleting the invoice", e);
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
