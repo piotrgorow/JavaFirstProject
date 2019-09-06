@@ -82,7 +82,7 @@ public class InvoiceTestUtil {
 
   static Invoice sampleInvoiceFromFile3() {
     Invoice invoice3 = new Invoice("inv3", LocalDate.parse("2019-03-01"),
-        InvoiceTestUtil.sampleCompany3(), InvoiceTestUtil.sampleCompany1());
+        InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
     invoice3.addInvoiceEntry(1L, "Papaya", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
     invoice3.addInvoiceEntry(2L, "Lemon", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
     invoice3.addInvoiceEntry(3L, "Oregano", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);
@@ -143,6 +143,6 @@ public class InvoiceTestUtil {
   }
 
   private static Address sampleAddress2() {
-    return new Address(1L, "Testowa 15A", "31-123", "Kielce", "DE");
+    return new Address(2L, "Testowa 15A", "31-123", "Kielce", "DE");
   }
 }
