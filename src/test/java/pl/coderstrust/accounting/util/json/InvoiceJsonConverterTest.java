@@ -106,10 +106,10 @@ class InvoiceJsonConverterTest {
         + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
         + "\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\":\"00-123\""
         + ",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"invoiceEntries\":"
-        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
-        + "\"vatValue\":2.392},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
-        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
-        + "\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
+        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4000,\"vatRate\":\"VAT_23\","
+        + "\"vatValue\":2.3920},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5000,"
+        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.8050},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
+        + "\"value\":5.6400,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
 
     // When
     InvoiceJsonConverter invoiceJsonConverter = new InvoiceJsonConverter();
@@ -198,10 +198,10 @@ class InvoiceJsonConverterTest {
         + "\"buyer\":{\"companyId\":1,\"name\":\"Buyer\",\"taxIdentificationNumber\":\"VAT_23\","
         + "\"address\":{\"addressId\":1,\"streetAddress\":\"Korkowa 2/12\",\"postalCode\""
         + ":\"00-123\",\"city\":\"Warszawa\",\"countryCode\":\"PL\"}},\"invoiceEntries\":"
-        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4,\"vatRate\":\"VAT_23\","
-        + "\"vatValue\":2.392},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5,"
-        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.805},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
-        + "\"value\":5.64,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
+        + "[{\"invoiceEntryId\":1,\"description\":\"Mąka\",\"quantity\":1,\"value\":10.4000,\"vatRate\":\"VAT_23\","
+        + "\"vatValue\":2.3920},{\"invoiceEntryId\":2,\"description\":\"Cukier\",\"quantity\":2,\"value\":3.5000,"
+        + "\"vatRate\":\"VAT_23\",\"vatValue\":0.8050},{\"invoiceEntryId\":3,\"description\":\"Sól\",\"quantity\":3,"
+        + "\"value\":5.6400,\"vatRate\":\"VAT_23\",\"vatValue\":1.2972}]}";
     Invoice expected = new Invoice("1", LocalDate.of(2019, 6, 14),
         new Company(1L, "Seller", "VAT_23", InvoiceTestUtil.sampleAddress1()),
         new Company(1L, "Buyer", "VAT_23", InvoiceTestUtil.sampleAddress1()));

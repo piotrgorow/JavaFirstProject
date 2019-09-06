@@ -73,7 +73,7 @@ public class InvoiceTestUtil {
 
   static Invoice sampleInvoice3() {
     Invoice invoice2 = new Invoice("inv3", LocalDate.parse("2019-03-01"),
-        InvoiceTestUtil.sampleCompany3(), InvoiceTestUtil.sampleCompany1());
+        InvoiceTestUtil.sampleCompany1(), InvoiceTestUtil.sampleCompany2());
     invoice2.addInvoiceEntry(1L, "Papaya", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);
     invoice2.addInvoiceEntry(2L, "Lemon", 100, BigDecimal.valueOf(1.99), Vat.VAT_8);
     invoice2.addInvoiceEntry(3L, "Oregano", 254, BigDecimal.valueOf(99.00), Vat.VAT_0);

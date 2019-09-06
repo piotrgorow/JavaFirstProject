@@ -20,14 +20,6 @@ import pl.coderstrust.model.Invoice;
 @DisplayName("InMemoryDatabase Test")
 class InMemoryDatabaseTest {
 
-  private static Stream<Arguments> getInvoiceByIdParameters() {
-    return Stream.of(
-        Arguments.of(1L, InvoiceTestUtil.sampleInvoiceFromFile()),
-        Arguments.of(2L, InvoiceTestUtil.sampleInvoiceFromFile2()),
-        Arguments.of(3L, InvoiceTestUtil.sampleInvoiceFromFile3())
-    );
-  }
-
   @Test
   @DisplayName("Should save simple invoice")
   void shouldSaveSimpleInvoice() {
@@ -72,9 +64,9 @@ class InMemoryDatabaseTest {
   @DisplayName("Should return invoice by ID")
   void shouldReturnInvoiceById(Long id, Invoice expected) {
     // Given
-    Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoice();
-    Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoice2();
-    Invoice sampleInvoice3 = InvoiceTestUtil.sampleInvoice3();
+    Invoice sampleInvoice1 = InvoiceTestUtil.sampleInvoiceFromFile();
+    Invoice sampleInvoice2 = InvoiceTestUtil.sampleInvoiceFromFile2();
+    Invoice sampleInvoice3 = InvoiceTestUtil.sampleInvoiceFromFile3();
     InMemoryDatabase inMemoryDatabase = new InMemoryDatabase();
     inMemoryDatabase.saveInvoice(sampleInvoice1);
     inMemoryDatabase.saveInvoice(sampleInvoice2);
@@ -85,6 +77,14 @@ class InMemoryDatabaseTest {
 
     // Then
     assertEquals(expected, result);
+  }
+
+  private static Stream<Arguments> getInvoiceByIdParameters() {
+    return Stream.of(
+        Arguments.of(1L, InvoiceTestUtil.sampleInvoiceFromFile()),
+        Arguments.of(2L, InvoiceTestUtil.sampleInvoiceFromFile2()),
+        Arguments.of(3L, InvoiceTestUtil.sampleInvoiceFromFile3())
+    );
   }
 
   @Test

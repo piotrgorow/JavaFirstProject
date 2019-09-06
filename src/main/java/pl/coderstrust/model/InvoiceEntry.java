@@ -49,9 +49,9 @@ public class InvoiceEntry {
     this.invoiceEntryId = invoiceEntryId;
     this.description = description;
     this.quantity = quantity;
-    this.value = value;
+    this.value = value.setScale(4, BigDecimal.ROUND_HALF_UP);
     this.vatRate = vatRate;
-    vatValue = vatRate.getValue().multiply(value);
+    vatValue = vatRate.getValue().multiply(value).setScale(4, BigDecimal.ROUND_HALF_UP);
   }
 
   public Long getInvoiceEntryId() {
