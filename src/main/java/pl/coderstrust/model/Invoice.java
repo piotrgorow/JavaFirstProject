@@ -30,6 +30,10 @@ public class Invoice {
   @ApiModelProperty(value = "identifier of invoice", example = "1", dataType = "Long")
   @Column(name = "invoice_id")
   private Long id;
+  @ApiModelProperty(value = "identifier of invoice", example = "1", dataType = "String")
+  @Column(name = "mongo_id")
+  @org.springframework.data.annotation.Id
+  private String mongoId;
   @ApiModelProperty(value = "Invoice number", example = "INV 1/01/2019", dataType = "String")
   @Column(name = "invoice_number")
   private String invoiceNumber;
@@ -86,8 +90,13 @@ public class Invoice {
     return id;
   }
 
+  public String getMongoId() {
+    return mongoId;
+  }
+
   public void setId(Long id) {
     this.id = id;
+    mongoId = String.valueOf(id);
   }
 
   @Override
@@ -100,6 +109,7 @@ public class Invoice {
     }
     Invoice invoice = (Invoice) o;
     return Objects.equals(id, invoice.id)
+        && Objects.equals(mongoId, invoice.mongoId)
         && Objects.equals(invoiceNumber, invoice.invoiceNumber)
         && Objects.equals(date, invoice.date)
         && Objects.equals(seller, invoice.seller)
@@ -109,6 +119,6 @@ public class Invoice {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, invoiceNumber, date, seller, buyer, invoiceEntries);
+    return Objects.hash(id, mongoId, invoiceNumber, date, seller, buyer, invoiceEntries);
   }
 }
