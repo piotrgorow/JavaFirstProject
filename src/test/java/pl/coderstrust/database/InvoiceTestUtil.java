@@ -80,7 +80,7 @@ public class InvoiceTestUtil {
     return invoice2;
   }
 
-  static Invoice sampleInvoiceFromFile3() {
+  public static Invoice sampleInvoiceFromFile3() {
     Invoice invoice3 = new Invoice("inv3", LocalDate.parse("2019-03-01"),
         InvoiceTestUtil.sampleCompany3(), InvoiceTestUtil.sampleCompany1());
     invoice3.addInvoiceEntry(1L, "Papaya", 10, BigDecimal.valueOf(125.23), Vat.VAT_23);

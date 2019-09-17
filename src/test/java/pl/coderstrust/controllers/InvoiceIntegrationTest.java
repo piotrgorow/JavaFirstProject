@@ -1,7 +1,5 @@
 package pl.coderstrust.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -9,39 +7,50 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.coderstrust.accounting.util.json.InvoiceJsonConverter;
-import pl.coderstrust.database.InMemoryDatabase;
 import pl.coderstrust.database.InvoiceTestUtil;
 import pl.coderstrust.model.Invoice;
-import pl.coderstrust.services.InvoiceService;
 
+@SpringBootTest
+@AutoConfigureMockMvc
+@WithMockUser(roles = "ADMIN")
+@TestPropertySource(locations = "classpath:integration-test.properites")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class InvoiceIntegrationTest {
 
-  private final InvoiceJsonConverter invoiceJsonConverter = new InvoiceJsonConverter();
-  private final InvoiceService invoiceService = new InvoiceService(new InMemoryDatabase());
+  @Autowired
+  private InvoiceJsonConverter invoiceJsonConverter;
+
+  @Autowired
   private MockMvc mvc;
 
-  @BeforeEach
-  void setup() {
-    mvc = MockMvcBuilders.standaloneSetup(new InvoiceController(invoiceService, invoiceJsonConverter)).build();
+  private void addInvoice(Invoice invoice) throws Exception {
+    mvc.perform(post("/invoices")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(invoiceJsonConverter.toJson(invoice)));
   }
 
   @Test
   @DisplayName("Should return all invoices")
   void shouldReturnAllInvoices() throws Exception {
     // Given
-    List<Invoice> invoices = Arrays
-        .asList(InvoiceTestUtil.sampleInvoiceFromFile(), InvoiceTestUtil.sampleInvoiceFromFile2());
-    invoiceService.saveInvoice(invoices.get(0));
-    invoiceService.saveInvoice(invoices.get(1));
+    List<Invoice> invoices = new ArrayList<>(
+        Arrays.asList(InvoiceTestUtil.sampleInvoiceFromFile(), InvoiceTestUtil.sampleInvoiceFromFile2()));
+    addInvoice(InvoiceTestUtil.sampleInvoiceFromFile());
+    addInvoice(InvoiceTestUtil.sampleInvoiceFromFile2());
 
     // Then
     mvc.perform(get("/invoices"))
@@ -55,7 +64,7 @@ class InvoiceIntegrationTest {
     // Given
     Long invoiceId = 1L;
     Invoice invoice = InvoiceTestUtil.sampleInvoiceFromFile();
-    invoiceService.saveInvoice(invoice);
+    addInvoice(invoice);
 
     // Then
     mvc.perform(get(String.format("/invoices/%d", invoiceId)))
@@ -68,16 +77,13 @@ class InvoiceIntegrationTest {
   void shouldAddInvoice() throws Exception {
     // Given
     Invoice invoice = InvoiceTestUtil.sampleInvoiceFromFile();
+    addInvoice(invoice);
 
-    // When
+    // Then
     mvc.perform(post("/invoices")
         .contentType(MediaType.APPLICATION_JSON)
         .content(invoiceJsonConverter.toJson(invoice)))
         .andExpect(status().isCreated());
-    Invoice result = invoiceService.getInvoiceById(1L);
-
-    // Then
-    assertEquals(invoice, result);
   }
 
   @Test
@@ -86,19 +92,14 @@ class InvoiceIntegrationTest {
     // Given
     Long invoiceId = 1L;
     Invoice invoice = InvoiceTestUtil.sampleInvoiceFromFile();
-    invoiceService.saveInvoice(invoice);
     String invoiceAsJson = invoiceJsonConverter.toJson(invoice).replace("inv1", "inv2");
-    Invoice expected = invoiceJsonConverter.fromJson(invoiceAsJson);
+    addInvoice(invoiceJsonConverter.fromJson(invoiceAsJson));
 
-    // When
+    // Then
     mvc.perform(put(String.format("/invoices/%d", invoiceId))
         .contentType(MediaType.APPLICATION_JSON)
         .content(invoiceAsJson))
         .andExpect(status().isOk());
-    Invoice result = invoiceService.getInvoiceById(1L);
-
-    // Then
-    assertEquals(expected, result);
   }
 
   @Test
@@ -106,14 +107,10 @@ class InvoiceIntegrationTest {
   void shouldDeleteInvoice() throws Exception {
     // Given
     Long invoiceId = 1L;
-    Invoice invoice = InvoiceTestUtil.sampleInvoiceFromFile();
-    invoiceService.saveInvoice(invoice);
-
-    // When
-    mvc.perform(delete(String.format("/invoices/%d", invoiceId)))
-        .andExpect(status().isOk());
+    addInvoice(InvoiceTestUtil.sampleInvoiceFromFile());
 
     // Then
-    assertNull(invoiceService.getInvoiceById(1L));
+    mvc.perform(delete(String.format("/invoices/%d", invoiceId)))
+        .andExpect(status().isOk());
   }
 }
