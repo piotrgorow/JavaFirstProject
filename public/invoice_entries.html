@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<h2>List of entries</h2>
+<a class="btn btn-outline-primary" href="http://localhost:8080/index.html" role="button">Return</a>
+<div ng-app="invoiceApp" ng-controller="invoiceCtrl">
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Invoice entry ID</th>
+      <th scope="col">Description</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Value</th>
+      <th scope="col">Tax rate</th>
+      <th scope="col">Tax value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="x in myData">
+      <th scope="row">{{ x.invoiceEntryId }}</th>
+      <td>{{ x.description }}</td>
+      <td>{{ x.quantity }}</td>
+      <td>{{ x.value }}</td>
+      <td>{{ x.vatRate }}</td>
+      <td>{{ x.vatValue }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+var app = angular.module('invoiceApp', []);
+app.controller('invoiceCtrl', function($scope, $http) {
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+  $http({
+  url: "http://localhost:8080/invoices/" + getUrlVars()["id"],
+  method: "get"
+  }).then(function (response) {
+      $scope.myData = response.data.invoiceEntries;
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<h2>List of invoices</h2>
+<div ng-app="invoiceApp" ng-controller="invoiceCtrl">
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Invoice ID</th>
+      <th scope="col">Invoice number</th>
+      <th scope="col">Date</th>
+      <th scope="col">Seller name</th>
+      <th scope="col">Seller tax ID</th>
+      <th scope="col">Seller street</th>
+      <th scope="col">Seller postal code</th>
+      <th scope="col">Seller city</th>
+      <th scope="col">Seller country</th>
+      <th scope="col">Buyer name</th>
+      <th scope="col">Buyer tax ID</th>
+      <th scope="col">Buyer street</th>
+      <th scope="col">Buyer postal code</th>
+      <th scope="col">Buyer city</th>
+      <th scope="col">Buyer country</th>
+      <th scope="col">Operation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="x in myData">
+      <th scope="row">{{ x.id }}</th>
+      <td>{{ x.invoiceNumber }}</td>
+      <td>{{ x.date }}</td>
+      <td>{{ x.seller.name }}</td>
+      <td>{{ x.seller.taxIdentificationNumber }}</td>
+      <td>{{ x.seller.address.streetAddress }}</td>
+      <td>{{ x.seller.address.postalCode }}</td>
+      <td>{{ x.seller.address.city }}</td>
+      <td>{{ x.seller.address.countryCode }}</td>
+      <td>{{ x.buyer.name }}</td>
+      <td>{{ x.buyer.taxIdentificationNumber }}</td>
+      <td>{{ x.buyer.address.streetAddress }}</td>
+      <td>{{ x.buyer.address.postalCode }}</td>
+      <td>{{ x.buyer.address.city }}</td>
+      <td>{{ x.buyer.address.countryCode }}</td>
+      <td><a href="http://localhost:8080/invoice_entries.html?id={{x.id}}">Show entries</a></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+var app = angular.module('invoiceApp', []);
+app.controller('invoiceCtrl', function($scope, $http) {
+  $http.get("http://localhost:8080/invoices").then(function (response) {
+      $scope.myData = response.data;
+  });
+});
+</script>
+
+</body>
+</html>
